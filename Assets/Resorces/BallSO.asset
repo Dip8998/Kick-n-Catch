@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 507253b543f3c75449afcf766aea9435, type: 3}
+  m_Name: BallSO
+  m_EditorClassIdentifier: 
+  BallPrefab: {fileID: 2108581792949357987, guid: 84577ea0f18df484e85a5954d682623a, type: 3}
+  BallSpawnPos: {x: 0.55, y: 0, z: 0}
