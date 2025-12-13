@@ -186,7 +186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2617233767890779935}
   - component: {fileID: 6167351806818165068}
-  - component: {fileID: 4950716294324168475}
+  - component: {fileID: 2971967578274763932}
   m_Layer: 0
   m_Name: Boundary
   m_TagString: Untagged
@@ -264,7 +264,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4950716294324168475
+--- !u!61 &2971967578274763932
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -320,7 +320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3831053748583407146}
   - component: {fileID: 2669275425610520930}
-  - component: {fileID: 6797347021949596783}
+  - component: {fileID: 1988867486856035889}
   m_Layer: 0
   m_Name: Boundary
   m_TagString: Untagged
@@ -398,7 +398,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &6797347021949596783
+--- !u!61 &1988867486856035889
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -488,7 +488,7 @@ GameObject:
   m_Component:
   - component: {fileID: 649515134406623807}
   - component: {fileID: 1347553121870871718}
-  - component: {fileID: 3239661032949571958}
+  - component: {fileID: 9206874845764832027}
   m_Layer: 0
   m_Name: Boundary
   m_TagString: Untagged
@@ -566,7 +566,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &3239661032949571958
+--- !u!61 &9206874845764832027
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
