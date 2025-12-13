@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: -8154093924451759471, guid: 3aeecf906181150479b1dbca8d3911a0, type: 3}
   PlayerSpawnPos: {x: -2, y: -0.55, z: 0}
+  PlayerMoveSpeed: 10
+  MinX: -2.5
+  MaxX: 1
