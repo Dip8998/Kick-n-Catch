@@ -1,0 +1,35 @@
+{
+  "buildFiles": [
+    "D:\\Kick_n_Catch\\Library\\PramData\\AndroidApplicationController\\Cache\\com.knc.kickncatch\\gradle-project\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
+    "D:\\Kick_n_Catch\\Library\\PramData\\AndroidApplicationController\\Cache\\com.knc.kickncatch\\gradle-project\\unityLibrary\\src\\main\\cpp\\FramePacing\\CMakeLists.txt",
+    "D:\\Kick_n_Catch\\Library\\PramData\\AndroidApplicationController\\Cache\\com.knc.kickncatch\\gradle-project\\unityLibrary\\src\\main\\cpp\\GameActivity\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "D:\\Game Development\\Unity\\Unity Editor\\6000.0.32f1\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\SDK\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "D:\\Kick_n_Catch\\.utmp\\Debug\\3p561y1v\\arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "D:\\Game Development\\Unity\\Unity Editor\\6000.0.32f1\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\SDK\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "D:\\Kick_n_Catch\\.utmp\\Debug\\3p561y1v\\arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "game::@d02bb112ea9f9c2ed29f": {
+      "artifactName": "game",
+      "abi": "arm64-v8a",
+      "output": "D:\\Kick_n_Catch\\Library\\PramData\\AndroidApplicationController\\Cache\\com.knc.kickncatch\\gradle-project\\unityLibrary\\build\\intermediates\\cxx\\Debug\\3p561y1v\\obj\\arm64-v8a\\libgame.so",
+      "runtimeFiles": []
+    },
+    "swappywrapper::@7e25bd1f32ce224db4e9": {
+      "artifactName": "swappywrapper",
+      "abi": "arm64-v8a",
+      "output": "D:\\Kick_n_Catch\\Library\\PramData\\AndroidApplicationController\\Cache\\com.knc.kickncatch\\gradle-project\\unityLibrary\\build\\intermediates\\cxx\\Debug\\3p561y1v\\obj\\arm64-v8a\\libswappywrapper.so",
+      "runtimeFiles": []
+    }
+  }
+}
