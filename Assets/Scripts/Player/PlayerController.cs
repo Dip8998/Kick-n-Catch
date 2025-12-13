@@ -1,4 +1,5 @@
 ﻿using KNC.Core.Services;
+using KNC.Player.StateMachine;
 using UnityEngine;
 
 namespace KNC.Player
@@ -7,8 +8,11 @@ namespace KNC.Player
     {
         private PlayerView view;
         private readonly PlayerScriptableObject so;
+        private PlayerStateMachine stateMachine;
         private Transform parent;
-        private float moveInput;
+
+        public float MoveInput { get; private set; }
+        public Rigidbody2D Rigidbody => view.Rigidbody;
 
         public PlayerController(PlayerScriptableObject so)
         {
@@ -17,40 +21,36 @@ namespace KNC.Player
 
         public void Initialize()
         {
-            parent = CreateParent("_Player");
+            parent = new GameObject("_Player").transform;
+
             view = GameObject.Instantiate(so.PlayerPrefab, parent);
             view.transform.position = so.PlayerSpawnPos;
             view.InitializeView(this);
+
+            stateMachine = new PlayerStateMachine(this);
         }
 
         public void ReadInput()
         {
-            moveInput = InputService.Instance.Horizontal;
+            MoveInput = InputService.Instance.Horizontal;
         }
 
-        public void FixedTick(float fixedDeltaTime)
+        public void Tick()
         {
-            HandleMovement(fixedDeltaTime);
+            stateMachine.Update();
         }
 
-        private void HandleMovement(float fixedDeltaTime)
+        public void Move(float fixedDeltaTime)
         {
-            Rigidbody2D rb = view.Rigidbody;
-
             float targetX =
-                rb.position.x +
-                moveInput * so.PlayerMoveSpeed * fixedDeltaTime;
+                Rigidbody.position.x +
+                MoveInput * so.PlayerMoveSpeed * fixedDeltaTime;
 
             targetX = Mathf.Clamp(targetX, so.MinX, so.MaxX);
 
-            Vector2 targetPos = new Vector2(targetX, rb.position.y);
-
-            rb.MovePosition(targetPos);
-        }
-
-        private Transform CreateParent(string name)
-        {
-            return new GameObject(name).transform;
+            Rigidbody.MovePosition(
+                new Vector2(targetX, Rigidbody.position.y)
+            );
         }
     }
 }

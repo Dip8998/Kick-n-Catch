@@ -22,12 +22,8 @@ namespace KNC.Player
 
         private void Update()
         {
-            controller?.ReadInput();
-        }
-
-        private void FixedUpdate()
-        {
-            controller?.FixedTick(Time.fixedDeltaTime); 
+            controller.ReadInput();
+            controller.Tick();
         }
     }
 }

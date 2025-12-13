@@ -16,4 +16,4 @@ MonoBehaviour:
   PlayerSpawnPos: {x: -2, y: -0.55, z: 0}
   PlayerMoveSpeed: 10
   MinX: -2.5
-  MaxX: 1
+  MaxX: 0.5

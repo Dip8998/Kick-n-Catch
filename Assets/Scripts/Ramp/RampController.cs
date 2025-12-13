@@ -21,9 +21,6 @@ namespace KNC.Ramp
             view.InitializeView(this);
         }
 
-        public void Dispose() { /* future */ }
-        public void Reset() { /* future */ }
-
         private Transform CreateParent(string name)
         {
             var go = new GameObject(name);
