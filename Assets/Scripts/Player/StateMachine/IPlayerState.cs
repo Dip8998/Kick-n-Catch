@@ -1,6 +1,6 @@
 ﻿namespace KNC.Player.StateMachine
 {
-    public interface IState
+    public interface IPlayerState
     {
         PlayerController Owner { get; set; }
         void OnStateEnter();

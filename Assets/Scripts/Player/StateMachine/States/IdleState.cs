@@ -2,7 +2,7 @@
 
 namespace KNC.Player.StateMachine.States
 {
-    public class IdleState : IState
+    public class IdleState : IPlayerState
     {
         public PlayerController Owner { get; set; }
         private PlayerStateMachine sm;

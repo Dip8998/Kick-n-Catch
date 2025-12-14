@@ -1,6 +1,6 @@
 ﻿namespace KNC.Player.StateMachine.States
 {
-    public class KickState : IState
+    public class KickState : IPlayerState
     {
         public PlayerController Owner { get; set; }
         private PlayerStateMachine stateMachine;

@@ -10,5 +10,10 @@ namespace KNC.Ball
         {
             this.controller = controller;
         }
+
+        private void Update()
+        {
+            controller.Tick();
+        }
     }
 }

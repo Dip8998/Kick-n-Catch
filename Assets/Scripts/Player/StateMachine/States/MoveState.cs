@@ -3,7 +3,7 @@ using KNC.Player.StateMachine;
 
 namespace KNC.Player.StateMachine.States
 {
-    public class MoveState : IState
+    public class MoveState : IPlayerState
     {
         public PlayerController Owner { get; set; }
         private PlayerStateMachine sm;

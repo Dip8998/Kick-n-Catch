@@ -7,8 +7,8 @@ namespace KNC.Player.StateMachine
     public class PlayerStateMachine
     {
         private PlayerController owner;
-        private IState currentState;
-        protected Dictionary<PlayerState, IState> States = new();
+        private IPlayerState currentState;
+        protected Dictionary<PlayerState, IPlayerState> States = new();
 
         public PlayerStateMachine(PlayerController owner)
         {
@@ -35,7 +35,7 @@ namespace KNC.Player.StateMachine
 
         public void Update() => currentState?.Update();
 
-        protected void ChangeState(IState state)
+        protected void ChangeState(IPlayerState state)
         {
             currentState?.OnStateExit();
             currentState = state;
