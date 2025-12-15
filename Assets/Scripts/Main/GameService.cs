@@ -1,6 +1,5 @@
 ﻿using KNC.Ball;
 using KNC.Player;
-using KNC.Player.StateMachine;
 using KNC.Ramp;
 using KNC.Utilities;
 using UnityEngine;
@@ -24,12 +23,12 @@ namespace KNC.Main
 
         private Vector3 playerStartPos;
         private Vector3 ballStartPos;
+        private float resetDelayTime = 2f;
 
         [SerializeField] private RampScriptableObject rampScriptableObject;
         [SerializeField] private PlayerScriptableObject playerScriptableObject;
         [SerializeField] private BallScriptableObject ballScriptableObject;
-        [SerializeField] private float resetDelayTime = 2f;
-
+        
         public RoundState CurrentRoundState { get; set; } = RoundState.Idle;
 
         protected override void Awake()

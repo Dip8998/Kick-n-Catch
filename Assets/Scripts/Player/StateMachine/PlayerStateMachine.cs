@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using KNC.Player.StateMachine.States;
-using UnityEngine;
 
 namespace KNC.Player.StateMachine
 {

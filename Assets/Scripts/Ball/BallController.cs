@@ -6,32 +6,28 @@ namespace KNC.Ball
 {
     public class BallController
     {
-        private Rigidbody2D rb;
-        private Collider2D ballCollider;
         private BallStateMachine sm;
         private BallScriptableObject so;
         private BallView view;
-
+        private Rigidbody2D rb;
+        private KickZone kickZone;
+        private Collider2D ballCollider;
+       
         private int groundContacts;
         private bool isResolved;
-
         private float catchTimer;
+        private float resolveTimer;
+
+        private const float MaxKickDistance = 1.0f;
         private const float CatchWindow = 2f;
-
-        public Collider2D BallCollider => ballCollider;
-        public BallView View => view;
-
-        public bool HasBeenKicked { get; private set; }
-        public bool IsResolving => isResolved;
+        private const float MaxResolveTime = 4f;
 
         public Rigidbody2D Rigidbody => rb;
-
-        private float resolveTimer;
-        private const float MaxResolveTime = 4f;
+        public Collider2D BallCollider => ballCollider;
+        public BallView View => view;
+        public bool HasBeenKicked { get; private set; }
+        public bool IsResolving => isResolved;
         public const float MissVelocityThreshold = 0.1f;
-
-        private KickZone kickZone;
-        private const float MaxKickDistance = 1.0f;
 
         public event Action OnResolved;
         public event Action OnCaught;

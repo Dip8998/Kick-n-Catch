@@ -1,12 +1,11 @@
-﻿using UnityEngine;
-
-namespace KNC.Ball.StateMachine.States
+﻿namespace KNC.Ball.StateMachine.States
 {
     public class CaughtState : IBallState
     {
         public BallController Owner { get; set; }
+        private BallStateMachine sm;
 
-        public CaughtState(BallStateMachine sm) { }
+        public CaughtState(BallStateMachine sm) => this.sm = sm;
 
         public void OnStateEnter()
         {

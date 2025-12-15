@@ -11,22 +11,23 @@ namespace KNC.Player
     {
         private PlayerView view;
         private PlayerStateMachine sm;
-        private bool canMove = true;
-
         private PowerBarController powerBar;
         private BallController ball;
+        private PlayerScriptableObject so;
 
-        public float MoveInput { get; private set; }
-        public bool IsKickReleased { get; private set; }
+        private bool canMove = true;
+        private float speedMultiplier = 1f;
+
         public BallController BallController => ball;
         public Rigidbody2D Rigidbody => view.Rigidbody;
         public PowerBarController PowerBar => powerBar;
         public PowerBarView PowerBarView => view.PowerBarView;
         public PlayerView View => view;
         public PlayerStateMachine StateMachine => sm;
-        private PlayerScriptableObject so;
-        private float speedMultiplier = 1f;
+
         public Vector3 InitialScale { get; private set; }
+        public float MoveInput { get; private set; }
+        public bool IsKickReleased { get; private set; }
 
         public PlayerController(PlayerScriptableObject so, BallController ball)
         {

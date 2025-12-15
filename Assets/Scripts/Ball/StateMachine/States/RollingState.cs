@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace KNC.Ball.StateMachine.States
+﻿namespace KNC.Ball.StateMachine.States
 {
     public class RollingState : IBallState
     {

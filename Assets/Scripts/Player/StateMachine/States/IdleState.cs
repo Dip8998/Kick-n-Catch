@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace KNC.Player.StateMachine.States
+﻿namespace KNC.Player.StateMachine.States
 {
     public class IdleState : IPlayerState
     {

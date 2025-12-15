@@ -8,8 +8,8 @@ namespace KNC.PowerBar
         private readonly PowerBarScriptableObject so;
         private float currentCharge;
         private bool isCharging;
-        public float MaxCharge => so.MaxCharge;
 
+        public float MaxCharge => so.MaxCharge;
         public bool IsCharging => isCharging;
 
         public event Action<float> OnChargeChanged;

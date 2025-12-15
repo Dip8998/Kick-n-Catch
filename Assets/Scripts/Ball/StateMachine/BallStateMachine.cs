@@ -1,17 +1,14 @@
 ﻿using System.Collections.Generic;
 using KNC.Ball.StateMachine.States;
-using UnityEngine;
-
 namespace KNC.Ball.StateMachine
 {
     public class BallStateMachine
     {
         private IBallState currentState;
         private BallController owner;
+        private Dictionary<BallState, IBallState> states = new();
 
         public BallState CurrentState { get; private set; }
-
-        private Dictionary<BallState, IBallState> states = new();
 
         public BallStateMachine(BallController owner)
         {
