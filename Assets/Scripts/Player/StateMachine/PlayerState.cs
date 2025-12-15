@@ -5,6 +5,7 @@
         Idle,
         Move,
         Aim,
-        Kick
+        Kick,
+        TurnAndCatch
     }
 }

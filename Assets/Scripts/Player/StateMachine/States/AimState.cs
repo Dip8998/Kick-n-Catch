@@ -12,8 +12,13 @@ namespace KNC.Player.StateMachine.States
 
         public void OnStateEnter()
         {
-            Debug.Log("[PLAYER][Aim] Enter");
+            if (Owner.BallController.IsResolved)
+            {
+                sm.ChangeState(PlayerState.Move);
+                return;
+            }
 
+            InputService.Instance.ReleaseMove();
             Owner.SetMovementEnabled(false);
             Owner.PowerBarView.Show();
         }

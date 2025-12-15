@@ -7,6 +7,8 @@ namespace KNC.Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerView : MonoBehaviour
     {
+        [SerializeField] private BasketView catchBasket;
+
         private PlayerController controller;
         private Rigidbody2D rb;
 
@@ -22,6 +24,8 @@ namespace KNC.Player
             rb.gravityScale = 1f;
             rb.freezeRotation = true;
             rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+
+            catchBasket.Initialize(controller);
         }
 
         private void Update()

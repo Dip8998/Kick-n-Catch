@@ -13,13 +13,15 @@ namespace KNC.Ball.StateMachine.States
 
         public void Update()
         {
-            if (Owner.IsResolved)
+            if (!Owner.HasBeenKicked || Owner.IsResolved)
                 return;
 
             if (!Owner.IsAirborne())
             {
-                Owner.Resolve();
-                sm.ChangeState(BallState.Missed);
+                if (Owner.Rigidbody.linearVelocity.magnitude < BallController.MissVelocityThreshold)
+                {
+                    Owner.Miss();
+                }
             }
         }
 

@@ -17,13 +17,15 @@ namespace KNC.Player
 
         public float MoveInput { get; private set; }
         public bool IsKickReleased { get; private set; }
-
+        public BallController BallController => ball;
         public Rigidbody2D Rigidbody => view.Rigidbody;
         public PowerBarController PowerBar => powerBar;
         public PowerBarView PowerBarView => view.PowerBarView;
-
+        public PlayerView View => view;
+        public PlayerStateMachine StateMachine => sm;
         private PlayerScriptableObject so;
         private float speedMultiplier = 1f;
+        public Vector3 InitialScale { get; private set; }
 
         public PlayerController(PlayerScriptableObject so, BallController ball)
         {
@@ -36,6 +38,7 @@ namespace KNC.Player
             view = Object.Instantiate(so.PlayerPrefab);
             view.transform.position = so.PlayerSpawnPos;
             view.InitializeView(this);
+            InitialScale = view.transform.localScale;
 
             powerBar = new PowerBarController(so.PowerBarSO);
             view.PowerBarView.Bind(powerBar);
@@ -57,8 +60,7 @@ namespace KNC.Player
 
             float targetX =
                 Rigidbody.position.x +
-                MoveInput * so.PlayerMoveSpeed * speedMultiplier * fixedDeltaTime;
-
+                MoveInput * so.PlayerMoveSpeed * fixedDeltaTime;
 
             targetX = Mathf.Clamp(targetX, so.MinX, so.MaxX);
 
@@ -69,30 +71,40 @@ namespace KNC.Player
 
         public void SetMovementEnabled(bool v) => canMove = v;
 
+        private System.Collections.IEnumerator ReenableAfterSeparation(Collider2D col)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            Rigidbody.linearVelocity = Vector2.zero; 
+            Rigidbody.angularVelocity = 0f;         
+
+            ball.IgnoreCollisionWith(col, false);
+
+            FreezePlayer(false);
+
+            SetSpeedMultiplier(1f);
+        }
+
         public void ExecuteKick(float force)
         {
+            view.StartCoroutine(ExecuteKickSequence(force));
+        }
+
+        private System.Collections.IEnumerator ExecuteKickSequence(float force)
+        {
             var playerCol = Rigidbody.GetComponent<Collider2D>();
+
             ball.IgnoreCollisionWith(playerCol, true);
-
             SetSpeedMultiplier(0.75f);
-            Vector2 dir = Vector2.right;
-
             FreezePlayer(true);
+
+            yield return new WaitForFixedUpdate();
+
+            Vector2 dir = Vector2.right;
             ball.Kick(force, dir);
 
             view.StartCoroutine(ReenableAfterSeparation(playerCol));
         }
-
-        private System.Collections.IEnumerator ReenableAfterSeparation(Collider2D col)
-        {
-            yield return new WaitUntil(() =>
-                !ball.BallCollider.IsTouching(col)
-            );
-
-            ball.IgnoreCollisionWith(col, false);
-            FreezePlayer(false);
-        }
-
         public void SetSpeedMultiplier(float value)
         {
             speedMultiplier = value;
@@ -112,6 +124,12 @@ namespace KNC.Player
 
         public void OnEnterKickZone()
         {
+            if (ball.HasBeenKicked)
+                return;
+
+            if (!ball.CanKick(Rigidbody.position))
+                return;
+
             sm.ChangeState(PlayerState.Aim);
         }
 

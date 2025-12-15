@@ -38,7 +38,7 @@ namespace KNC.Player.StateMachine.States
             Owner.SetMovementEnabled(true);
 
             InputService.Instance.ResetKickRelease();
-            sm.ChangeState(PlayerState.Move);
+            sm.ChangeState(PlayerState.TurnAndCatch);
         }
 
         public void Update() { }

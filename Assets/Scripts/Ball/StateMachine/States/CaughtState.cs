@@ -11,7 +11,6 @@ namespace KNC.Ball.StateMachine.States
         public void OnStateEnter()
         {
             Owner.StopBall();
-            Owner.Resolve(); 
         }
 
         public void Update() { }

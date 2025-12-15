@@ -20,6 +20,7 @@ namespace KNC.Player.StateMachine
             states.Add(PlayerState.Move, new MoveState(this));
             states.Add(PlayerState.Aim, new AimState(this));
             states.Add(PlayerState.Kick, new KickState(this));
+            states.Add(PlayerState.TurnAndCatch, new TurnAndCatchState(this));
 
             foreach (var s in states.Values)
                 s.Owner = owner;

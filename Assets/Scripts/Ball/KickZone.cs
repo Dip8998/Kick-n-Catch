@@ -11,6 +11,9 @@ namespace KNC.Ball
 
         private void OnTriggerEnter2D(Collider2D c)
         {
+            if (ball.IsResolved)
+                return;
+
             Debug.Log("[KICK ZONE] Player Entered");
             c.GetComponent<PlayerView>()?.Controller.OnEnterKickZone();
         }

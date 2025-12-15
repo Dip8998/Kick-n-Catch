@@ -12,12 +12,12 @@ namespace KNC.Utilities
             if (instance == null)
             {
                 instance = (T)this;
-                DontDestroyOnLoad(gameObject);
             }
             else
             {
                 Destroy(gameObject);
             }
         }
+        protected virtual void OnDestroy() { }
     }
 }
