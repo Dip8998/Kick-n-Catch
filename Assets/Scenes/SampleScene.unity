@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 986268c06620cbb4b927fb14f3da131f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerBarView: {fileID: 0}
+  powerBarView: {fileID: 2054209602}
 --- !u!4 &167732104
 Transform:
   m_ObjectHideFlags: 0
@@ -1648,7 +1648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb854fa6f1410a044b86716b02f5b156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillImage: {fileID: 1204785259}
+  fillImage: {fileID: 417247694}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
