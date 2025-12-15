@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using KNC.PowerBar;
+using UnityEngine;
 
 namespace KNC.Player
 {
@@ -15,5 +16,8 @@ namespace KNC.Player
         [Header("Horizontal Bounds")]
         public float MinX = -2.5f;
         public float MaxX = 2.5f;
+
+        [Header("PowerBar")]
+        public PowerBarScriptableObject PowerBarSO;
     }
 }

@@ -23,11 +23,15 @@ namespace KNC.Main
             rampController = new RampController(rampScriptableObject);
             rampController.Initialize();
 
-            playerController = new PlayerController(playerScriptableObject);
+            ballController = new BallController(ballScriptableObject);
+
+            playerController = new PlayerController(playerScriptableObject, ballController);
             playerController.Initialize();
 
-            ballController = new BallController(ballScriptableObject);
-            ballController.Initialize();
+            ballController.OnResolved += () =>
+            {
+                playerController.SetSpeedMultiplier(1f);
+            };
         }
     }
 }

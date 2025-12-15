@@ -2,6 +2,9 @@
 {
     public enum PlayerState
     {
-        Idle,Move,Kick
+        Idle,
+        Move,
+        Aim,
+        Kick
     }
 }

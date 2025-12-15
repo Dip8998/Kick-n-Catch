@@ -7,5 +7,6 @@ namespace KNC.Ball
     {
         public BallView BallPrefab;
         public Vector3 BallSpawnPos;
+        public float MaxHorizontalSpeed;
     }
 }

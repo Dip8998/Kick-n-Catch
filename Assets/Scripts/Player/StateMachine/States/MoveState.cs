@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using KNC.Player.StateMachine;
 
 namespace KNC.Player.StateMachine.States
 {
@@ -8,24 +7,27 @@ namespace KNC.Player.StateMachine.States
         public PlayerController Owner { get; set; }
         private PlayerStateMachine sm;
 
-        public MoveState(PlayerStateMachine sm)
-        {
-            this.sm = sm;
-        }
+        public MoveState(PlayerStateMachine sm) => this.sm = sm;
 
-        public void OnStateEnter() { }
+        public void OnStateEnter()
+        {
+            Debug.Log("[PLAYER][Move] Enter");
+        }
 
         public void Update()
         {
-            if (Owner.MoveInput == 0f)
-            {
-                sm.ChangeState(PlayerState.Idle);
-                return;
-            }
+            Debug.Log("[PLAYER][Move] Update | MoveInput: " + Owner.MoveInput);
 
-            Owner.Move(Time.fixedDeltaTime);
+            if (Owner.MoveInput == 0f)
+                sm.ChangeState(PlayerState.Idle);
+            else
+                Owner.Move(Time.fixedDeltaTime);
         }
 
-        public void OnStateExit() { }
+        public void OnStateExit()
+        {
+            Debug.Log("[PLAYER][Move] Exit");
+        }
+
     }
 }

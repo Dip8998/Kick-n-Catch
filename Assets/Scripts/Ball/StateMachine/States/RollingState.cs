@@ -5,24 +5,31 @@ namespace KNC.Ball.StateMachine.States
     public class RollingState : IBallState
     {
         public BallController Owner { get; set; }
-        private BallStateMachine stateMachine;
+        private BallStateMachine sm;
 
-        public RollingState(BallStateMachine stateMachine) => this.stateMachine = stateMachine;
+        public RollingState(BallStateMachine sm) => this.sm = sm;
 
         public void OnStateEnter()
         {
-            BallStateLogger.Enter(BallState.Rolling);
+            Debug.Log("[BALL][Rolling] Enter");
         }
 
         public void Update()
         {
+            if (Owner.IsResolved)
+                return;
+
             if (Owner.IsAirborne())
-                stateMachine.ChangeState(BallState.Airborne);
+            {
+                Debug.Log("[BALL][Rolling] Became Airborne");
+                Owner.StartCatchWindow(); 
+                sm.ChangeState(BallState.Airborne);
+            }
         }
 
         public void OnStateExit()
         {
-            BallStateLogger.Exit(BallState.Rolling);
+            Debug.Log("[BALL][Rolling] Exit");
         }
     }
 }

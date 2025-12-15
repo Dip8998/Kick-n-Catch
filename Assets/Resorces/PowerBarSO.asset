@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 507253b543f3c75449afcf766aea9435, type: 3}
-  m_Name: BallSO
+  m_Script: {fileID: 11500000, guid: e8326d2062666e348866a13f633bd003, type: 3}
+  m_Name: PowerBarSO
   m_EditorClassIdentifier: 
-  BallPrefab: {fileID: 2412579462815441727, guid: 84577ea0f18df484e85a5954d682623a, type: 3}
-  BallSpawnPos: {x: 0.55, y: 0, z: 0}
-  MaxHorizontalSpeed: 50
+  ChargeSpeed: 40
+  MaxCharge: 48
+  MinCharge: 12

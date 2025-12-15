@@ -1,23 +1,21 @@
-﻿namespace KNC.Ball.StateMachine.States
+﻿using UnityEngine;
+
+namespace KNC.Ball.StateMachine.States
 {
     public class CaughtState : IBallState
     {
         public BallController Owner { get; set; }
-        private BallStateMachine stateMachine;
 
-        public CaughtState(BallStateMachine stateMachine) => this.stateMachine = stateMachine;
+        public CaughtState(BallStateMachine sm) { }
 
         public void OnStateEnter()
         {
-            BallStateLogger.Enter(BallState.Caught);
             Owner.StopBall();
+            Owner.Resolve(); 
         }
 
         public void Update() { }
 
-        public void OnStateExit()
-        {
-            BallStateLogger.Exit(BallState.Caught);
-        }
+        public void OnStateExit() { }
     }
 }

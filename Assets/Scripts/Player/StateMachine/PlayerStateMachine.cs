@@ -1,47 +1,42 @@
-﻿using KNC.Player.StateMachine.States;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
+using KNC.Player.StateMachine.States;
+using UnityEngine;
 
 namespace KNC.Player.StateMachine
 {
     public class PlayerStateMachine
     {
-        private PlayerController owner;
         private IPlayerState currentState;
-        protected Dictionary<PlayerState, IPlayerState> States = new();
+        private PlayerController owner;
+
+        public PlayerState CurrentState { get; private set; }
+
+        private Dictionary<PlayerState, IPlayerState> states = new();
 
         public PlayerStateMachine(PlayerController owner)
         {
             this.owner = owner;
-            CreateState();
-            AssignOwner();
+            states.Add(PlayerState.Idle, new IdleState(this));
+            states.Add(PlayerState.Move, new MoveState(this));
+            states.Add(PlayerState.Aim, new AimState(this));
+            states.Add(PlayerState.Kick, new KickState(this));
+
+            foreach (var s in states.Values)
+                s.Owner = owner;
+
             ChangeState(PlayerState.Idle);
-        }
-
-        private void AssignOwner()
-        {
-            foreach(var playerState in States.Values)
-            {
-                playerState.Owner = owner;
-            }
-        }
-
-        private void CreateState()
-        {
-            States.Add(PlayerState.Idle, new IdleState(this));
-            States.Add(PlayerState.Move, new MoveState(this));
-            States.Add(PlayerState.Kick, new KickState(this));
         }
 
         public void Update() => currentState?.Update();
 
-        protected void ChangeState(IPlayerState state)
+        public void ChangeState(PlayerState state)
         {
-            currentState?.OnStateExit();
-            currentState = state;
-            currentState?.OnStateEnter();
-        }
+            Debug.Log($"[PLAYER SM] {CurrentState} → {state}");
 
-        public void ChangeState(PlayerState state) => ChangeState(States[state]);
+            currentState?.OnStateExit();
+            currentState = states[state];
+            CurrentState = state;
+            currentState.OnStateEnter();
+        }
     }
 }

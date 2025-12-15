@@ -1,23 +1,29 @@
+using UnityEngine;
+
 namespace KNC.Ball.StateMachine.States
 {
     public class WaitingState : IBallState
     {
         public BallController Owner { get; set; }
-        private BallStateMachine stateMachine;
+        private BallStateMachine sm;
 
-        public WaitingState(BallStateMachine stateMachine) => this.stateMachine = stateMachine;
+        public WaitingState(BallStateMachine sm) => this.sm = sm;
 
         public void OnStateEnter()
         {
-            BallStateLogger.Enter(BallState.Waiting);
+            Debug.Log("[BALL][Waiting] Enter");
             Owner.StopBall();
         }
 
-        public void Update() { }
+        public void Update()
+        {
+            Debug.Log("[BALL][Waiting] Update");
+        }
 
         public void OnStateExit()
         {
-            BallStateLogger.Exit(BallState.Waiting);
+            Debug.Log("[BALL][Waiting] Exit");
         }
+
     }
 }

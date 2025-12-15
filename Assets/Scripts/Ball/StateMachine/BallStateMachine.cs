@@ -1,48 +1,45 @@
-﻿using KNC.Ball.StateMachine.States;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using KNC.Ball.StateMachine.States;
+using UnityEngine;
 
 namespace KNC.Ball.StateMachine
 {
     public class BallStateMachine
     {
-        private BallController owner;
         private IBallState currentState;
-        protected Dictionary<BallState, IBallState> States = new();
+        private BallController owner;
+
+        public BallState CurrentState { get; private set; }
+
+        private Dictionary<BallState, IBallState> states = new();
 
         public BallStateMachine(BallController owner)
         {
             this.owner = owner;
-            CreateState();
-            AssignOwner();
+
+            states.Add(BallState.Waiting, new WaitingState(this));
+            states.Add(BallState.Rolling, new RollingState(this));
+            states.Add(BallState.Airborne, new AirborneState(this));
+            states.Add(BallState.Caught, new CaughtState(this));
+            states.Add(BallState.Missed, new MissedState(this));
+
+            foreach (var s in states.Values)
+                s.Owner = owner;
+
             ChangeState(BallState.Waiting);
-        }
-
-        private void AssignOwner()
-        {
-            foreach(var ballState in States.Values)
-            {
-                ballState.Owner = owner;
-            }
-        }
-
-        private void CreateState()
-        {
-            States.Add(BallState.Waiting, new WaitingState(this));
-            States.Add(BallState.Rolling, new RollingState(this));
-            States.Add(BallState.Airborne, new AirborneState(this));
-            States.Add(BallState.Caught, new CaughtState(this));
-            States.Add(BallState.Missed, new MissedState(this));
-        }
-
-        protected void ChangeState(IBallState newState)
-        {
-            currentState?.OnStateExit();
-            currentState = newState;
-            currentState?.OnStateEnter();
         }
 
         public void Update() => currentState?.Update();
 
-        public void ChangeState(BallState state) => ChangeState(States[state]); 
+        public void ChangeState(BallState state)
+        {
+            Debug.Log($"[BALL SM] {CurrentState} → {state}");
+
+            currentState?.OnStateExit();
+            currentState = states[state];
+            CurrentState = state;
+            currentState.OnStateEnter();
+        }
+
     }
 }

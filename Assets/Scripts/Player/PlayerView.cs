@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using KNC.PowerBar;
+using KNC.Core.Services;
 
 namespace KNC.Player
 {
@@ -9,6 +11,8 @@ namespace KNC.Player
         private Rigidbody2D rb;
 
         public Rigidbody2D Rigidbody => rb;
+        public PowerBarView PowerBarView => UIService.Instance.PowerBarView;    
+        public PlayerController Controller => controller;
 
         public void InitializeView(PlayerController controller)
         {

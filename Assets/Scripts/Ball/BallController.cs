@@ -1,45 +1,91 @@
-﻿using UnityEngine;
-using KNC.Ball.StateMachine;
+﻿using KNC.Ball.StateMachine;
+using System;
+using UnityEngine;
 
 namespace KNC.Ball
 {
     public class BallController
     {
-        private BallView view;
-        private readonly BallScriptableObject so;
-        private Transform parent;
-
         private Rigidbody2D rb;
-        private BallStateMachine stateMachine;
+        private Collider2D ballCollider;
+        private BallStateMachine sm;
+        private BallScriptableObject so;
 
-        private const float AirborneThreshold = 0.05f;
+        private int groundContacts;
+        private bool isResolved;
+
+        private float catchTimer;
+        private const float CatchWindow = 0.45f;
+
+        public Vector2 Position => rb.position;
+        public Collider2D BallCollider => ballCollider;
+        public bool IsResolved => isResolved;
+
+        public event Action OnResolved;
 
         public BallController(BallScriptableObject so)
         {
             this.so = so;
-        }
 
-        public void Initialize()
-        {
-            parent = CreateParent("_Ball");
-
-            view = Object.Instantiate(so.BallPrefab, parent);
+            BallView view = UnityEngine.Object.Instantiate(so.BallPrefab);
             view.transform.position = so.BallSpawnPos;
             view.InitializeView(this);
 
             rb = view.GetComponent<Rigidbody2D>();
+            ballCollider = view.GetComponent<Collider2D>();
 
-            stateMachine = new BallStateMachine(this);
+            view.GetComponentInChildren<KickZone>().Initialize(this);
+            sm = new BallStateMachine(this);
         }
 
         public void Tick()
         {
-            stateMachine.Update();
+            sm.Update();
+
+            if (catchTimer > 0f)
+                catchTimer -= Time.deltaTime;
         }
 
-        public void ChangeState(BallState state)
+        public void FixedTick()
         {
-            stateMachine.ChangeState(state);
+            ClampVelocity();
+        }
+
+        public void Kick(float force, Vector2 direction)
+        {
+            isResolved = false;
+            catchTimer = 0f;
+
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+
+            rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
+            sm.ChangeState(BallState.Rolling);
+        }
+
+        public void StartCatchWindow()
+        {
+            catchTimer = CatchWindow;
+        }
+
+        public bool CanBeCaught()
+        {
+            return catchTimer > 0f && !isResolved;
+        }
+
+        public void Resolve()
+        {
+            isResolved = true;
+            catchTimer = 0f;
+            OnResolved?.Invoke();
+        }
+
+        void ClampVelocity()
+        {
+            rb.linearVelocity = new Vector2(
+                Mathf.Clamp(rb.linearVelocity.x, -so.MaxHorizontalSpeed, so.MaxHorizontalSpeed),
+                rb.linearVelocity.y
+            );
         }
 
         public void StopBall()
@@ -48,19 +94,26 @@ namespace KNC.Ball
             rb.angularVelocity = 0f;
         }
 
+        public bool CanKick(Vector2 playerPosition)
+        {
+            return Mathf.Abs(playerPosition.y - rb.position.y) <= 0.3f;
+        }
+
+        public void OnGroundContact(bool enter)
+        {
+            groundContacts += enter ? 1 : -1;
+            groundContacts = Mathf.Max(groundContacts, 0);
+        }
+
         public bool IsAirborne()
         {
-            return Mathf.Abs(rb.linearVelocity.y) > AirborneThreshold;
+            return groundContacts == 0;
         }
 
-        public bool HasLanded()
+        public void IgnoreCollisionWith(Collider2D other, bool ignore)
         {
-            return Mathf.Abs(rb.linearVelocity.y) <= AirborneThreshold;
-        }
-
-        private Transform CreateParent(string name)
-        {
-            return new GameObject(name).transform;
+            if (other != null)
+                Physics2D.IgnoreCollision(ballCollider, other, ignore);
         }
     }
 }
