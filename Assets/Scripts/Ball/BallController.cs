@@ -16,23 +16,27 @@ namespace KNC.Ball
         private bool isResolved;
 
         private float catchTimer;
-        private const float CatchWindow =2f;
+        private const float CatchWindow = 2f;
 
-        public Vector2 Position => so.BallSpawnPos;
         public Collider2D BallCollider => ballCollider;
-        public bool IsResolved => isResolved;
         public BallView View => view;
-        public event Action OnResolved;
-        public event Action OnCaught;
-        public event Action OnMissed;
+
+        public bool HasBeenKicked { get; private set; }
+        public bool IsResolving => isResolved;
+
+        public Rigidbody2D Rigidbody => rb;
+
+        private float resolveTimer;
+        private const float MaxResolveTime = 4f;
+        public const float MissVelocityThreshold = 0.1f;
 
         private KickZone kickZone;
         private const float MaxKickDistance = 1.0f;
-        public Rigidbody2D Rigidbody => rb;
-        public const float MissVelocityThreshold = 0.1f;
-        private float resolveTimer;
-        private const float MaxResolveTime = 4f;
-        public bool HasBeenKicked { get; private set; }
+
+        public event Action OnResolved;
+        public event Action OnCaught;
+        public event Action OnMissed;
+        public event Action OnBallKicked;
 
         public BallController(BallScriptableObject so)
         {
@@ -47,9 +51,12 @@ namespace KNC.Ball
 
             rb = view.GetComponent<Rigidbody2D>();
             ballCollider = view.GetComponent<Collider2D>();
+
             rb.bodyType = RigidbodyType2D.Kinematic;
+
             kickZone = view.GetComponentInChildren<KickZone>();
             kickZone.Initialize(this);
+
             sm = new BallStateMachine(this);
         }
 
@@ -63,14 +70,11 @@ namespace KNC.Ball
             resolveTimer += Time.deltaTime;
 
             if (resolveTimer >= MaxResolveTime)
-            {
                 Miss();
-            }
 
             if (catchTimer > 0f)
                 catchTimer -= Time.deltaTime;
         }
-
 
         public void FixedTick()
         {
@@ -82,7 +86,6 @@ namespace KNC.Ball
             rb.bodyType = RigidbodyType2D.Dynamic;
 
             HasBeenKicked = true;
-
             isResolved = false;
             resolveTimer = 0f;
             catchTimer = 0f;
@@ -91,9 +94,10 @@ namespace KNC.Ball
             rb.angularVelocity = 0f;
 
             rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
+
+            OnBallKicked?.Invoke();
             sm.ChangeState(BallState.Airborne);
         }
-
 
         public void SetKickZoneActive(bool active)
         {
@@ -110,48 +114,32 @@ namespace KNC.Ball
             return catchTimer > 0f && !isResolved;
         }
 
-        public void Resolve()
+        private void Resolve()
         {
             isResolved = true;
             catchTimer = 0f;
 
-            SetKickZoneActive(false); 
-
+            SetKickZoneActive(false);
             OnResolved?.Invoke();
         }
 
-        void ClampVelocity()
+        private void ResolveAs(BallState state, Action callback)
         {
-            rb.linearVelocity = new Vector2(
-                Mathf.Clamp(rb.linearVelocity.x, -so.MaxHorizontalSpeed, so.MaxHorizontalSpeed),
-                rb.linearVelocity.y
-            );
-        }
+            if (isResolved) return;
 
-        public void StopBall()
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
+            Resolve();
+            sm.ChangeState(state);
+            callback?.Invoke();
         }
 
         public void Catch()
         {
-            if (isResolved) return;
-
-            Debug.Log("[BALL] Catch confirmed");
-            Resolve();
-            sm.ChangeState(BallState.Caught);
-            OnCaught?.Invoke();
+            ResolveAs(BallState.Caught, OnCaught);
         }
 
         public void Miss()
         {
-            if (isResolved) return;
-
-            Debug.Log("[BALL] Miss confirmed");
-            Resolve();
-            sm.ChangeState(BallState.Missed);
-            OnMissed?.Invoke();
+            ResolveAs(BallState.Missed, OnMissed);
         }
 
         public void ResetBall(Vector3 position)
@@ -166,19 +154,16 @@ namespace KNC.Ball
 
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
-
             rb.bodyType = RigidbodyType2D.Kinematic;
 
             view.transform.position = position;
             rb.position = position;
-
             rb.Sleep();
         }
 
         public bool CanKick(Vector2 playerPosition)
         {
-            float distance = Vector2.Distance(playerPosition, rb.position);
-            return distance <= MaxKickDistance;
+            return Vector2.Distance(playerPosition, rb.position) <= MaxKickDistance;
         }
 
         public void OnGroundContact(bool enter)
@@ -190,6 +175,20 @@ namespace KNC.Ball
         public bool IsAirborne()
         {
             return groundContacts <= 0;
+        }
+
+        public void StopBall()
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        private void ClampVelocity()
+        {
+            rb.linearVelocity = new Vector2(
+                Mathf.Clamp(rb.linearVelocity.x, -so.MaxHorizontalSpeed, so.MaxHorizontalSpeed),
+                rb.linearVelocity.y
+            );
         }
 
         public void IgnoreCollisionWith(Collider2D other, bool ignore)

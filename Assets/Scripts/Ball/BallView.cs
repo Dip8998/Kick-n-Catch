@@ -24,8 +24,6 @@ namespace KNC.Ball
 
         private void OnCollisionEnter2D(Collision2D c)
         {
-            Debug.Log($"[COLLISION] Ball hit: {c.collider.gameObject.name} with Tag: {c.collider.tag}"); 
-
             if (c.collider.CompareTag("Ramp"))
                 controller.OnGroundContact(true);
         }

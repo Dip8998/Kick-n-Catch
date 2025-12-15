@@ -3,6 +3,7 @@ using KNC.Core.Services;
 using KNC.Player.StateMachine;
 using KNC.PowerBar;
 using KNC.Ball;
+using KNC.Main;
 
 namespace KNC.Player
 {
@@ -89,6 +90,18 @@ namespace KNC.Player
         {
             view.StartCoroutine(ExecuteKickSequence(force));
         }
+
+        public void EnterMoveMode()
+        {
+            sm.ChangeState(PlayerState.Move);
+        }
+
+        public void EnterAimMode()
+        {
+            GameService.Instance.CurrentRoundState = RoundState.Aiming;
+            sm.ChangeState(PlayerState.Aim);
+        }
+
 
         private System.Collections.IEnumerator ExecuteKickSequence(float force)
         {

@@ -11,19 +11,11 @@ namespace KNC.Ball.StateMachine.States
 
         public void OnStateEnter()
         {
-            Debug.Log("[BALL][Waiting] Enter");
             Owner.StopBall();
         }
 
-        public void Update()
-        {
-            Debug.Log("[BALL][Waiting] Update");
-        }
+        public void Update() { }
 
-        public void OnStateExit()
-        {
-            Debug.Log("[BALL][Waiting] Exit");
-        }
-
+        public void OnStateExit() { }
     }
 }

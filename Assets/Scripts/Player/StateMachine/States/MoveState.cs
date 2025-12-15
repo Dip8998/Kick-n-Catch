@@ -9,25 +9,16 @@ namespace KNC.Player.StateMachine.States
 
         public MoveState(PlayerStateMachine sm) => this.sm = sm;
 
-        public void OnStateEnter()
-        {
-            Debug.Log("[PLAYER][Move] Enter");
-        }
+        public void OnStateEnter() { }
 
         public void Update()
         {
-            Debug.Log("[PLAYER][Move] Update | MoveInput: " + Owner.MoveInput);
-
             if (Owner.MoveInput == 0f)
                 sm.ChangeState(PlayerState.Idle);
             else
                 Owner.Move(Time.fixedDeltaTime);
         }
 
-        public void OnStateExit()
-        {
-            Debug.Log("[PLAYER][Move] Exit");
-        }
-
+        public void OnStateExit() { }
     }
 }

@@ -13,7 +13,7 @@ namespace KNC.Ball.StateMachine.States
 
         public void Update()
         {
-            if (!Owner.HasBeenKicked || Owner.IsResolved)
+            if (!Owner.HasBeenKicked || Owner.IsResolving)
                 return;
 
             if (!Owner.IsAirborne())

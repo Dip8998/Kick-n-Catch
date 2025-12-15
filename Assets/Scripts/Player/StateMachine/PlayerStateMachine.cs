@@ -32,8 +32,6 @@ namespace KNC.Player.StateMachine
 
         public void ChangeState(PlayerState state)
         {
-            Debug.Log($"[PLAYER SM] {CurrentState} → {state}");
-
             currentState?.OnStateExit();
             currentState = states[state];
             CurrentState = state;

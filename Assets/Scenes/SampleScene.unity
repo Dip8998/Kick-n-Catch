@@ -831,7 +831,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 25455987}
           m_TargetAssemblyTypeName: KNC.Core.Services.InputService, Assembly-CSharp
-          m_MethodName: Release
+          m_MethodName: ReleaseMove
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -847,7 +847,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 25455987}
           m_TargetAssemblyTypeName: KNC.Core.Services.InputService, Assembly-CSharp
-          m_MethodName: Release
+          m_MethodName: ReleaseMove
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1085,7 +1085,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 25455987}
           m_TargetAssemblyTypeName: KNC.Core.Services.InputService, Assembly-CSharp
-          m_MethodName: Release
+          m_MethodName: ReleaseMove
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1101,7 +1101,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 25455987}
           m_TargetAssemblyTypeName: KNC.Core.Services.InputService, Assembly-CSharp
-          m_MethodName: Release
+          m_MethodName: ReleaseMove
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1240,6 +1240,7 @@ MonoBehaviour:
   rampScriptableObject: {fileID: 11400000, guid: b75bb48c347aa1849ad2bfd684f14aa9, type: 2}
   playerScriptableObject: {fileID: 11400000, guid: 90a2e7b6a1d2eec4aa02cdd1e6facb4e, type: 2}
   ballScriptableObject: {fileID: 11400000, guid: 99da938128237ce4f98f35b0f11f7b37, type: 2}
+  resetDelayTime: 2
 --- !u!1 &1586724238
 GameObject:
   m_ObjectHideFlags: 0

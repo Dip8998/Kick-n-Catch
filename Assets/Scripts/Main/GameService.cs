@@ -8,6 +8,14 @@ using UnityEngine.SceneManagement;
 
 namespace KNC.Main
 {
+    public enum RoundState
+    {
+        Idle,
+        Aiming,
+        BallInPlay,
+        Resolving
+    }
+
     public class GameService : GenericMonoSingleton<GameService>
     {
         private RampController rampController;
@@ -20,8 +28,9 @@ namespace KNC.Main
         [SerializeField] private RampScriptableObject rampScriptableObject;
         [SerializeField] private PlayerScriptableObject playerScriptableObject;
         [SerializeField] private BallScriptableObject ballScriptableObject;
-        [SerializeField] private float resetDelayTime = 2.0f;
-        // In KNC.Main.GameService.cs
+        [SerializeField] private float resetDelayTime = 2f;
+
+        public RoundState CurrentRoundState { get; set; } = RoundState.Idle;
 
         protected override void Awake()
         {
@@ -38,7 +47,8 @@ namespace KNC.Main
 
         private void InitializeControllers()
         {
-            // CLEAN OLD
+            CurrentRoundState = RoundState.Idle;
+
             if (playerController?.View != null)
                 Destroy(playerController.View.gameObject);
 
@@ -54,63 +64,46 @@ namespace KNC.Main
             playerController = new PlayerController(playerScriptableObject, ballController);
             playerController.Initialize();
 
-            // SAFE: after initialization
             playerStartPos = playerScriptableObject.PlayerSpawnPos;
             ballStartPos = ballController.View.transform.position;
 
-            // SUBSCRIBE ONCE
+            ballController.OnBallKicked += () => CurrentRoundState = RoundState.BallInPlay;
             ballController.OnCaught += OnBallCaught;
             ballController.OnMissed += OnBallMissed;
         }
 
-
-        // **Scene Reload Handler** (This is the crucial part that reconnects inputs)
-        private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            Debug.Log("[GAME] Scene Reloaded. Reinitializing Controllers to New Scene Views.");
-
-            // Call the initialization function again! This will re-instantiate the BallView 
-            // and PlayerView (or find the new ones) and reconnect the input listeners.
             InitializeControllers();
-
-            // Ensure state is correct for the start of the game
             playerController.SetMovementEnabled(true);
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-
-            // Unsubscribe from the static event when the GameService is destroyed
-            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
         private void OnBallCaught()
         {
-            Debug.Log("[GAME] Ball Caught → Continue");
+            CurrentRoundState = RoundState.Resolving;
 
             playerController.PowerBar.Reset();
             playerController.PowerBarView.Hide();
-            playerController.StateMachine.ChangeState(PlayerState.Move);
+            playerController.EnterMoveMode();
 
             StartCoroutine(DelayedResetSequence());
         }
 
-
         private void OnBallMissed()
         {
-            Debug.Log("[GAME] Ball Missed → RESTARTING SCENE");
-
-            // *** The scene reload is now safe because the miss is triggered correctly. ***
+            CurrentRoundState = RoundState.Resolving;
             SceneManager.LoadScene(0);
         }
 
         private System.Collections.IEnumerator DelayedResetSequence()
         {
             yield return new WaitForSeconds(resetDelayTime);
-
-            Debug.Log("[GAME] Resetting Positions...");
-
             ResetPositions();
         }
 
@@ -125,9 +118,7 @@ namespace KNC.Main
             prb.position = playerStartPos;
             prb.Sleep();
 
-            playerController.StateMachine.ChangeState(PlayerState.Move);
-
-            playerController.SetSpeedMultiplier(1f);
+            playerController.EnterMoveMode();
             playerController.SetMovementEnabled(true);
             playerController.PowerBarView.Hide();
             playerController.View.transform.localScale = playerController.InitialScale;
@@ -135,13 +126,12 @@ namespace KNC.Main
             ballController.ResetBall(ballStartPos);
 
             StartCoroutine(ReenableKickZoneSequence());
+            CurrentRoundState = RoundState.Idle;
         }
 
         private System.Collections.IEnumerator ReenableKickZoneSequence()
         {
             yield return null;
-
-            Debug.Log("[GAME] KickZone Re-enabled.");
             ballController.SetKickZoneActive(true);
         }
     }

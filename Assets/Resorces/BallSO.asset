@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BallSO
   m_EditorClassIdentifier: 
   BallPrefab: {fileID: 2412579462815441727, guid: 84577ea0f18df484e85a5954d682623a, type: 3}
-  BallSpawnPos: {x: 0.55, y: 0, z: 0}
+  BallSpawnPos: {x: 0.55, y: -0.6, z: 0}
   MaxHorizontalSpeed: 50

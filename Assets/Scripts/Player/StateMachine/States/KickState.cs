@@ -12,8 +12,6 @@ namespace KNC.Player.StateMachine.States
 
         public void OnStateEnter()
         {
-            Debug.Log("[PLAYER][Kick] Enter");
-
             float rawCharge = Owner.PowerBar.Release();
 
             float t = rawCharge / Owner.PowerBar.MaxCharge;
@@ -28,8 +26,6 @@ namespace KNC.Player.StateMachine.States
 
             finalForce += Random.Range(-0.4f, 0.4f);
 
-            Debug.Log($"[KICK FORCE] final:{finalForce}");
-
             if (Owner.CanKickBall())
             {
                 Owner.ExecuteKick(finalForce);
@@ -43,9 +39,6 @@ namespace KNC.Player.StateMachine.States
 
         public void Update() { }
 
-        public void OnStateExit()
-        {
-            Debug.Log("[PLAYER][Kick] Exit");
-        }
+        public void OnStateExit() { }
     }
 }

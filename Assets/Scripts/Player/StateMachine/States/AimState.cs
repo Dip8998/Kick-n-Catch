@@ -12,7 +12,7 @@ namespace KNC.Player.StateMachine.States
 
         public void OnStateEnter()
         {
-            if (Owner.BallController.IsResolved)
+            if (Owner.BallController.IsResolving)
             {
                 sm.ChangeState(PlayerState.Move);
                 return;
@@ -25,22 +25,16 @@ namespace KNC.Player.StateMachine.States
 
         public void Update()
         {
-            Debug.Log("[PLAYER][Aim] Update | Charging: " + Owner.PowerBar.IsCharging);
-
             if (InputService.Instance.KickHeld)
             {
                 if (!Owner.PowerBar.IsCharging)
-                {
-                    Debug.Log("[PLAYER][Aim] Start Charging");
                     Owner.PowerBar.StartCharge();
-                }
 
                 Owner.PowerBar.Update(Time.deltaTime);
             }
 
             if (Owner.IsKickReleased)
             {
-                Debug.Log("[PLAYER][Aim] Kick Released");
                 InputService.Instance.ResetKickRelease();
                 sm.ChangeState(PlayerState.Kick);
             }
@@ -48,9 +42,7 @@ namespace KNC.Player.StateMachine.States
 
         public void OnStateExit()
         {
-            Debug.Log("[PLAYER][Aim] Exit");
             Owner.SetMovementEnabled(false);
         }
-
     }
 }

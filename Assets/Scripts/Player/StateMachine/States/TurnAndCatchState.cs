@@ -11,14 +11,11 @@ namespace KNC.Player.StateMachine.States
 
         public void OnStateEnter()
         {
-            Debug.Log("[PLAYER][TurnAndCatch] Enter");
-
             Owner.View.transform.localScale = new Vector3(
                 -Owner.InitialScale.x,
                 Owner.InitialScale.y,
                 Owner.InitialScale.z
             );
-
 
             Owner.SetMovementEnabled(true);
         }
@@ -28,9 +25,6 @@ namespace KNC.Player.StateMachine.States
             Owner.Move(Time.fixedDeltaTime);
         }
 
-        public void OnStateExit()
-        {
-            Debug.Log("[PLAYER][TurnAndCatch] Exit");
-        }
+        public void OnStateExit() { }
     }
 }

@@ -33,13 +33,10 @@ namespace KNC.Ball.StateMachine
 
         public void ChangeState(BallState state)
         {
-            Debug.Log($"[BALL SM] {CurrentState} → {state}");
-
             currentState?.OnStateExit();
             currentState = states[state];
             CurrentState = state;
             currentState.OnStateEnter();
         }
-
     }
 }
