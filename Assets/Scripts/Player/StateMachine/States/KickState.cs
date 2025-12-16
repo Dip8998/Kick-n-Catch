@@ -14,21 +14,39 @@ namespace KNC.Player.StateMachine.States
         {
             float rawCharge = Owner.PowerBar.Release();
 
-            float t = rawCharge / Owner.PowerBar.MaxCharge;
-            t = Mathf.Clamp01(t);
-
+            float t = Mathf.Clamp01(rawCharge / Owner.PowerBar.MaxCharge);
             float curved = Mathf.SmoothStep(0f, 1f, t);
 
             float minKickForce = 6f;
             float maxKickForce = 16f;
 
-            float finalForce = Mathf.Lerp(minKickForce, maxKickForce, curved);
+            float baseForce = Mathf.Lerp(minKickForce, maxKickForce, curved);
 
-            finalForce += Random.Range(-0.4f, 0.4f);
+            float forceVariance = Mathf.Lerp(0.98f, 1.05f, curved);
+
+            float distanceError = Mathf.Abs(
+                Owner.Rigidbody.position.x - Owner.BallController.Rigidbody.position.x
+            );
+
+            float errorT = Mathf.InverseLerp(0f, 0.6f, distanceError);
+
+            float positionalBias = Mathf.Lerp(1.05f, 0.92f, errorT);
+
+            float finalForce =
+                baseForce *
+                positionalBias *
+                Random.Range(0.97f, forceVariance);
+
+
+            float angleVariance = Mathf.Lerp(1.5f, 6f, curved);
+            float angle = Random.Range(-angleVariance, angleVariance);
+
+            Vector2 direction =
+                Quaternion.Euler(0f, 0f, angle) * Vector2.right;
 
             if (Owner.CanKickBall())
             {
-                Owner.ExecuteKick(finalForce);
+                Owner.ExecuteKick(finalForce, direction);
             }
 
             Owner.SetMovementEnabled(true);
@@ -38,7 +56,6 @@ namespace KNC.Player.StateMachine.States
         }
 
         public void Update() { }
-
         public void OnStateExit() { }
     }
 }

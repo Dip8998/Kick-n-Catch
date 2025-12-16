@@ -16,7 +16,6 @@
 
             if (Owner.IsAirborne())
             {
-                Owner.StartCatchWindow(); 
                 sm.ChangeState(BallState.Airborne);
             }
         }

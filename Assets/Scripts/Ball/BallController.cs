@@ -12,14 +12,13 @@ namespace KNC.Ball
         private Rigidbody2D rb;
         private KickZone kickZone;
         private Collider2D ballCollider;
-       
+
         private int groundContacts;
         private bool isResolved;
         private float catchTimer;
         private float resolveTimer;
 
         private const float MaxKickDistance = 1.0f;
-        private const float CatchWindow = 2f;
         private const float MaxResolveTime = 4f;
 
         public Rigidbody2D Rigidbody => rb;
@@ -85,30 +84,28 @@ namespace KNC.Ball
             isResolved = false;
             resolveTimer = 0f;
 
-            StartCatchWindow(); 
-
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
 
             rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
 
+            float impulseVariance = UnityEngine.Random.Range(0.97f, 1.03f);
+            rb.linearVelocity *= impulseVariance;
+
+            float speed = rb.linearVelocity.magnitude;
+            catchTimer = Mathf.Lerp(
+                2.2f,   
+                0.7f,  
+                Mathf.InverseLerp(4f, 14f, speed)
+            );
+
             OnBallKicked?.Invoke();
             sm.ChangeState(BallState.Airborne);
         }
 
-        public void SetKickZoneActive(bool active)
-        {
-            kickZone.GetComponent<Collider2D>().enabled = active;
-        }
-
-        public void StartCatchWindow()
-        {
-            catchTimer = CatchWindow;
-        }
-
         public bool CanBeCaught()
         {
-            return catchTimer > 0f && !isResolved;
+            return !isResolved && HasBeenKicked;
         }
 
         private void Resolve()
@@ -116,7 +113,6 @@ namespace KNC.Ball
             isResolved = true;
             catchTimer = 0f;
 
-            SetKickZoneActive(false);
             OnResolved?.Invoke();
         }
 
@@ -131,8 +127,18 @@ namespace KNC.Ball
 
         public void Catch()
         {
-            Debug.Log("[BALL] Catch fired on instance " + GetHashCode());
-            ResolveAs(BallState.Caught, OnCaught);
+            if (isResolved) return;
+
+            Debug.Log("[BALL] Catch fired");
+
+            isResolved = true;
+            catchTimer = 0f;
+
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+
+            sm.ChangeState(BallState.Caught);
+            OnCaught?.Invoke(); 
         }
 
         public void Miss()
@@ -142,6 +148,7 @@ namespace KNC.Ball
 
         public void ResetBall(Vector3 position)
         {
+            SetKickZoneActive(false);
             HasBeenKicked = false;
             isResolved = false;
             resolveTimer = 0f;
@@ -187,6 +194,11 @@ namespace KNC.Ball
                 Mathf.Clamp(rb.linearVelocity.x, -so.MaxHorizontalSpeed, so.MaxHorizontalSpeed),
                 rb.linearVelocity.y
             );
+        }
+
+        public void SetKickZoneActive(bool active)
+        {
+            kickZone.GetComponent<Collider2D>().enabled = active;
         }
 
         public void IgnoreCollisionWith(Collider2D other, bool ignore)

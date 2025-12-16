@@ -87,9 +87,9 @@ namespace KNC.Player
             SetSpeedMultiplier(1f);
         }
 
-        public void ExecuteKick(float force)
+        public void ExecuteKick(float force, Vector2 direction)
         {
-            view.StartCoroutine(ExecuteKickSequence(force));
+            view.StartCoroutine(ExecuteKickSequence(force, direction));
         }
 
         public void EnterMoveMode()
@@ -104,7 +104,7 @@ namespace KNC.Player
         }
 
 
-        private System.Collections.IEnumerator ExecuteKickSequence(float force)
+        private System.Collections.IEnumerator ExecuteKickSequence(float force, Vector2 direction)
         {
             var playerCol = Rigidbody.GetComponent<Collider2D>();
 
@@ -114,11 +114,11 @@ namespace KNC.Player
 
             yield return new WaitForFixedUpdate();
 
-            Vector2 dir = Vector2.right;
-            ball.Kick(force, dir);
+            ball.Kick(force, direction);
 
             view.StartCoroutine(ReenableAfterSeparation(playerCol));
         }
+
         public void SetSpeedMultiplier(float value)
         {
             speedMultiplier = value;
