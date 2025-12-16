@@ -84,7 +84,8 @@ namespace KNC.Ball
             HasBeenKicked = true;
             isResolved = false;
             resolveTimer = 0f;
-            catchTimer = 0f;
+
+            StartCatchWindow(); 
 
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
@@ -130,6 +131,7 @@ namespace KNC.Ball
 
         public void Catch()
         {
+            Debug.Log("[BALL] Catch fired on instance " + GetHashCode());
             ResolveAs(BallState.Caught, OnCaught);
         }
 

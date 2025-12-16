@@ -1,4 +1,5 @@
 ﻿using KNC.Ball;
+using KNC.Core.Services;
 using KNC.Player;
 using KNC.Ramp;
 using KNC.Utilities;
@@ -41,7 +42,18 @@ namespace KNC.Main
             DontDestroyOnLoad(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
 
+            if (SceneManager.GetActiveScene().buildIndex == 0)
+            {
+                ScoreService.Instance.ResetScore();
+            }
+
             InitializeControllers();
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            InitializeControllers();
+            playerController.SetMovementEnabled(true);
         }
 
         private void InitializeControllers()
@@ -54,13 +66,13 @@ namespace KNC.Main
             if (ballController?.View != null)
                 Destroy(ballController.View.gameObject);
 
+            ballController = new BallController(ballScriptableObject);
+            playerController = new PlayerController(playerScriptableObject, ballController);
+
             rampController = new RampController(rampScriptableObject);
             rampController.Initialize();
 
-            ballController = new BallController(ballScriptableObject);
             ballController.Initialize();
-
-            playerController = new PlayerController(playerScriptableObject, ballController);
             playerController.Initialize();
 
             playerStartPos = playerScriptableObject.PlayerSpawnPos;
@@ -69,13 +81,10 @@ namespace KNC.Main
             ballController.OnBallKicked += () => CurrentRoundState = RoundState.BallInPlay;
             ballController.OnCaught += OnBallCaught;
             ballController.OnMissed += OnBallMissed;
+
+            Debug.Log("[GAME] Controllers initialized fresh");
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-        {
-            InitializeControllers();
-            playerController.SetMovementEnabled(true);
-        }
 
         protected override void OnDestroy()
         {
@@ -85,7 +94,12 @@ namespace KNC.Main
 
         private void OnBallCaught()
         {
+            Debug.Log("[GAME] OnBallCaught fired");
+
             CurrentRoundState = RoundState.Resolving;
+
+            Debug.Log("[GAME] Calling AddScore()");
+            ScoreService.Instance.AddScore(1);
 
             playerController.PowerBar.Reset();
             playerController.PowerBarView.Hide();
