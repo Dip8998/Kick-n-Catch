@@ -39,19 +39,18 @@ namespace KNC.Main
             if (Instance != this)
                 return;
 
-            DontDestroyOnLoad(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
-
-            if (SceneManager.GetActiveScene().buildIndex == 0)
-            {
-                ScoreService.Instance.ResetScore();
-            }
 
             InitializeControllers();
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            if (scene.buildIndex == 0)
+            {
+                ScoreService.Instance.ResetScore();
+            }
+
             InitializeControllers();
             playerController.SetMovementEnabled(true);
         }
