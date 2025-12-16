@@ -16,7 +16,6 @@ namespace KNC.Player
         private PlayerScriptableObject so;
 
         private bool canMove = true;
-        private float speedMultiplier = 1f;
 
         public BallController BallController => ball;
         public Rigidbody2D Rigidbody => view.Rigidbody;
@@ -83,8 +82,6 @@ namespace KNC.Player
             ball.IgnoreCollisionWith(col, false);
 
             FreezePlayer(false);
-
-            SetSpeedMultiplier(1f);
         }
 
         public void ExecuteKick(float force, Vector2 direction)
@@ -103,13 +100,11 @@ namespace KNC.Player
             sm.ChangeState(PlayerState.Aim);
         }
 
-
         private System.Collections.IEnumerator ExecuteKickSequence(float force, Vector2 direction)
         {
             var playerCol = Rigidbody.GetComponent<Collider2D>();
 
             ball.IgnoreCollisionWith(playerCol, true);
-            SetSpeedMultiplier(0.75f);
             FreezePlayer(true);
 
             yield return new WaitForFixedUpdate();
@@ -117,11 +112,6 @@ namespace KNC.Player
             ball.Kick(force, direction);
 
             view.StartCoroutine(ReenableAfterSeparation(playerCol));
-        }
-
-        public void SetSpeedMultiplier(float value)
-        {
-            speedMultiplier = value;
         }
 
         public void FreezePlayer(bool freeze)

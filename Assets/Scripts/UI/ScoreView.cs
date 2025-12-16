@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using TMPro; 
+using TMPro;
 using KNC.Core.Services;
 
 namespace KNC.UI
@@ -16,21 +16,20 @@ namespace KNC.UI
 
         private void Start()
         {
-            if (ScoreService.Instance == null)
+            if (ScoreService.Instance == null || EventService.Instance == null)
             {
-                Debug.LogError("ScoreService missing in scene");
                 enabled = false;
                 return;
             }
 
-            ScoreService.Instance.OnScoreChanged += UpdateScore;
+            EventService.Instance.OnScoreChanged.AddListener(UpdateScore);
             UpdateScore(ScoreService.Instance.Score);
         }
 
         private void OnDestroy()
         {
-            if (ScoreService.Instance != null)
-                ScoreService.Instance.OnScoreChanged -= UpdateScore;
+            if (EventService.Instance != null)
+                EventService.Instance.OnScoreChanged.RemoveListener(UpdateScore);
         }
 
         private void UpdateScore(int value)

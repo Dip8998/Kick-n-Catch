@@ -29,7 +29,7 @@ namespace KNC.Main
         [SerializeField] private RampScriptableObject rampScriptableObject;
         [SerializeField] private PlayerScriptableObject playerScriptableObject;
         [SerializeField] private BallScriptableObject ballScriptableObject;
-        
+
         public RoundState CurrentRoundState { get; set; } = RoundState.Idle;
 
         protected override void Awake()
@@ -40,6 +40,11 @@ namespace KNC.Main
                 return;
 
             SceneManager.sceneLoaded += OnSceneLoaded;
+
+            EventService.Instance.OnBallCaught.AddListener(OnBallCaught);
+            EventService.Instance.OnBallMissed.AddListener(OnBallMissed);
+            EventService.Instance.OnKickStarted.AddListener(OnKickStarted);
+            EventService.Instance.OnGameReset.AddListener(ResetPositions);
 
             InitializeControllers();
         }
@@ -53,6 +58,11 @@ namespace KNC.Main
 
             InitializeControllers();
             playerController.SetMovementEnabled(true);
+        }
+
+        private void OnKickStarted()
+        {
+            CurrentRoundState = RoundState.BallInPlay;
         }
 
         private void InitializeControllers()
@@ -76,28 +86,28 @@ namespace KNC.Main
 
             playerStartPos = playerScriptableObject.PlayerSpawnPos;
             ballStartPos = ballController.View.transform.position;
-
-            ballController.OnBallKicked += () => CurrentRoundState = RoundState.BallInPlay;
-            ballController.OnCaught += OnBallCaught;
-            ballController.OnMissed += OnBallMissed;
-
-            Debug.Log("[GAME] Controllers initialized fresh");
         }
-
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
             SceneManager.sceneLoaded -= OnSceneLoaded;
+
+            var eventService = EventService.Instance;
+
+            if (eventService != null)
+            {
+                eventService.OnBallCaught.RemoveListener(OnBallCaught);
+                eventService.OnBallMissed.RemoveListener(OnBallMissed);
+                eventService.OnKickStarted.RemoveListener(OnKickStarted);
+                eventService.OnGameReset.RemoveListener(ResetPositions);
+            }
         }
 
         private void OnBallCaught()
         {
-            Debug.Log("[GAME] OnBallCaught fired");
-
             CurrentRoundState = RoundState.Resolving;
 
-            Debug.Log("[GAME] Calling AddScore()");
             ScoreService.Instance.AddScore(1);
 
             playerController.PowerBar.Reset();
@@ -116,7 +126,7 @@ namespace KNC.Main
         private System.Collections.IEnumerator DelayedResetSequence()
         {
             yield return new WaitForSeconds(resetDelayTime);
-            ResetPositions();
+            EventService.Instance.RaiseGameReset();
         }
 
         private void ResetPositions()

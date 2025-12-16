@@ -1,4 +1,5 @@
 ﻿using KNC.Ball.StateMachine;
+using KNC.Core.Services;
 using System;
 using UnityEngine;
 
@@ -27,11 +28,6 @@ namespace KNC.Ball
         public bool HasBeenKicked { get; private set; }
         public bool IsResolving => isResolved;
         public const float MissVelocityThreshold = 0.1f;
-
-        public event Action OnResolved;
-        public event Action OnCaught;
-        public event Action OnMissed;
-        public event Action OnBallKicked;
 
         public BallController(BallScriptableObject so)
         {
@@ -94,12 +90,12 @@ namespace KNC.Ball
 
             float speed = rb.linearVelocity.magnitude;
             catchTimer = Mathf.Lerp(
-                2.2f,   
-                0.7f,  
+                2.2f,
+                0.7f,
                 Mathf.InverseLerp(4f, 14f, speed)
             );
 
-            OnBallKicked?.Invoke();
+            EventService.Instance.RaiseKickStarted(); 
             sm.ChangeState(BallState.Airborne);
         }
 
@@ -112,8 +108,6 @@ namespace KNC.Ball
         {
             isResolved = true;
             catchTimer = 0f;
-
-            OnResolved?.Invoke();
         }
 
         private void ResolveAs(BallState state, Action callback)
@@ -129,8 +123,6 @@ namespace KNC.Ball
         {
             if (isResolved) return;
 
-            Debug.Log("[BALL] Catch fired");
-
             isResolved = true;
             catchTimer = 0f;
 
@@ -138,12 +130,16 @@ namespace KNC.Ball
             rb.angularVelocity = 0f;
 
             sm.ChangeState(BallState.Caught);
-            OnCaught?.Invoke(); 
+            EventService.Instance.RaiseBallCaught(); 
         }
 
         public void Miss()
         {
-            ResolveAs(BallState.Missed, OnMissed);
+            if (isResolved) return;
+
+            Resolve();
+            sm.ChangeState(BallState.Missed);
+            EventService.Instance.RaiseBallMissed();
         }
 
         public void ResetBall(Vector3 position)

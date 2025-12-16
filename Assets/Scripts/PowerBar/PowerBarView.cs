@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using KNC.Core.Services;
 
 namespace KNC.PowerBar
 {
@@ -13,8 +14,17 @@ namespace KNC.PowerBar
         {
             maxCharge = controller.MaxCharge;
 
-            controller.OnChargeChanged += OnChargeChanged;
-            controller.OnReleased += _ => Hide();
+            EventService.Instance.OnPowerChanged.AddListener(OnChargeChanged);
+            EventService.Instance.OnPowerReleased.AddListener(Hide);
+        }
+
+        private void OnDestroy()
+        {
+            if (EventService.Instance != null)
+            {
+                EventService.Instance.OnPowerChanged.RemoveListener(OnChargeChanged);
+                EventService.Instance.OnPowerReleased.RemoveListener(Hide);
+            }
         }
 
         private void OnChargeChanged(float charge)
@@ -22,11 +32,6 @@ namespace KNC.PowerBar
             float t = Mathf.Clamp01(charge / maxCharge);
 
             fillImage.fillAmount = t;
-
-            if (t < 0.5f)
-                fillImage.color = Color.Lerp(Color.green, Color.yellow, t * 2f);
-            else
-                fillImage.color = Color.Lerp(Color.yellow, Color.red, (t - 0.5f) * 2f);
         }
 
         public void Show()

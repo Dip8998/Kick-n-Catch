@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KNC.Core.Services;
+using System;
 using UnityEngine;
 
 namespace KNC.PowerBar
@@ -12,9 +13,6 @@ namespace KNC.PowerBar
         public float MaxCharge => so.MaxCharge;
         public bool IsCharging => isCharging;
 
-        public event Action<float> OnChargeChanged;
-        public event Action<float> OnReleased;
-
         public PowerBarController(PowerBarScriptableObject so)
         {
             this.so = so;
@@ -24,7 +22,7 @@ namespace KNC.PowerBar
         {
             currentCharge = 0f;
             isCharging = true;
-            OnChargeChanged?.Invoke(currentCharge);
+            EventService.Instance.RaisePowerChanged(currentCharge); 
         }
 
         public void Update(float dt)
@@ -33,7 +31,7 @@ namespace KNC.PowerBar
 
             currentCharge += so.ChargeSpeed * dt;
             currentCharge = Mathf.Clamp(currentCharge, 0f, so.MaxCharge);
-            OnChargeChanged?.Invoke(currentCharge);
+            EventService.Instance.RaisePowerChanged(currentCharge); 
         }
 
         public float Release()
@@ -42,7 +40,7 @@ namespace KNC.PowerBar
 
             isCharging = false;
             float value = Mathf.Max(currentCharge, so.MinCharge);
-            OnReleased?.Invoke(value);
+            EventService.Instance.RaisePowerReleased(); 
             return value;
         }
 
@@ -50,7 +48,7 @@ namespace KNC.PowerBar
         {
             currentCharge = 0f;
             isCharging = false;
-            OnChargeChanged?.Invoke(0f);
+            EventService.Instance.RaisePowerChanged(0f); 
         }
 
     }

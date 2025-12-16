@@ -14,9 +14,6 @@ namespace KNC.Core.Services
         public int Score => score;
         public int HighScore => highScore;
 
-        public event Action<int> OnScoreChanged;
-        public event Action<int> OnHighScoreChanged;
-
         protected override void Awake()
         {
             base.Awake();
@@ -31,13 +28,13 @@ namespace KNC.Core.Services
         public void ResetScore()
         {
             score = 0;
-            OnScoreChanged?.Invoke(score);
+            EventService.Instance.RaiseScoreChanged(score);
         }
 
         public void AddScore(int amount)
         {
             score += amount;
-            OnScoreChanged?.Invoke(score);
+            EventService.Instance.RaiseScoreChanged(score);
 
             if (score > highScore)
             {
@@ -45,7 +42,7 @@ namespace KNC.Core.Services
                 PlayerPrefs.SetInt(HIGH_SCORE_KEY, highScore);
                 PlayerPrefs.Save();
 
-                OnHighScoreChanged?.Invoke(highScore);
+                EventService.Instance.RaiseHighScoreChanged(highScore);
             }
         }
 
