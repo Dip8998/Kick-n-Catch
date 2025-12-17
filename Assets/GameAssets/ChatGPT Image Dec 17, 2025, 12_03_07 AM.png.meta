@@ -1,34 +1,37 @@
 fileFormatVersion: 2
-guid: 3164979aaad7ee645a3a43a56bc74d0a
+guid: 33f39021f5234d341929059f937ba1d1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2117104560170110070
-    second: Colorful_game_buttons_02-removebg-preview_0
+      213: -8625984115593173560
+    second: ChatGPT Image Dec 17, 2025, 12_03_07 AM_0
   - first:
-      213: 1902270367751906820
-    second: Colorful_game_buttons_02-removebg-preview_1
+      213: -1442865112476868042
+    second: ChatGPT Image Dec 17, 2025, 12_03_07 AM_1
   - first:
-      213: 1924486753221853120
-    second: Colorful_game_buttons_02-removebg-preview_2
+      213: -9116922129359179391
+    second: ChatGPT Image Dec 17, 2025, 12_03_07 AM_2
   - first:
-      213: -7369597910547331888
-    second: Colorful_game_buttons_02-removebg-preview_3
+      213: -1965669921295707290
+    second: ChatGPT Image Dec 17, 2025, 12_03_07 AM_3
   - first:
-      213: 2917348288040805798
-    second: Colorful_game_buttons_02-removebg-preview_4
+      213: -4581316175879499151
+    second: ChatGPT Image Dec 17, 2025, 12_03_07 AM_4
   - first:
-      213: -1588196652889337574
-    second: Colorful_game_buttons_02-removebg-preview_5
+      213: 6457078976107566200
+    second: ChatGPT Image Dec 17, 2025, 12_03_07 AM_5
   - first:
-      213: -618047328712790966
-    second: Colorful_game_buttons_02-removebg-preview_6
+      213: -4002020705599721146
+    second: ChatGPT Image Dec 17, 2025, 12_03_07 AM_6
   - first:
-      213: 7038464791378438561
-    second: Colorful_game_buttons_02-removebg-preview_7
+      213: 3902573827516835128
+    second: ChatGPT Image Dec 17, 2025, 12_03_07 AM_7
   - first:
-      213: 3160584213412863696
-    second: Colorful_game_buttons_02-removebg-preview_8
+      213: 7608839942283031805
+    second: ChatGPT Image Dec 17, 2025, 12_03_07 AM_8
+  - first:
+      213: -4656639519781387192
+    second: ChatGPT Image Dec 17, 2025, 12_03_07 AM_9
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -61,7 +64,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -124,12 +127,12 @@ TextureImporter:
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 47
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 1
+    overridden: 0
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
@@ -150,199 +153,221 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Colorful_game_buttons_02-removebg-preview_0
+      name: ChatGPT Image Dec 17, 2025, 12_03_07 AM_0
       rect:
         serializedVersion: 2
-        x: 24
-        y: 346
-        width: 126
-        height: 126
+        x: 75
+        y: 999
+        width: 23
+        height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a8373b29e988e92e0800000000000000
-      internalID: -2117104560170110070
+      spriteID: 8c528e736295a4880800000000000000
+      internalID: -8625984115593173560
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Colorful_game_buttons_02-removebg-preview_1
+      name: ChatGPT Image Dec 17, 2025, 12_03_07 AM_1
       rect:
         serializedVersion: 2
-        x: 187
-        y: 346
-        width: 126
-        height: 126
+        x: 102
+        y: 868
+        width: 602
+        height: 179
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 406aa9022d8366a10800000000000000
-      internalID: 1902270367751906820
+      spriteID: 632230823d9e9fbe0800000000000000
+      internalID: -1442865112476868042
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Colorful_game_buttons_02-removebg-preview_2
+      name: ChatGPT Image Dec 17, 2025, 12_03_07 AM_2
       rect:
         serializedVersion: 2
-        x: 350
-        y: 346
-        width: 127
-        height: 126
+        x: 719
+        y: 968
+        width: 12
+        height: 25
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0cfbbb4718625ba10800000000000000
-      internalID: 1924486753221853120
+      spriteID: 181f5aa70af2a7180800000000000000
+      internalID: -9116922129359179391
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Colorful_game_buttons_02-removebg-preview_3
+      name: ChatGPT Image Dec 17, 2025, 12_03_07 AM_3
       rect:
         serializedVersion: 2
-        x: 23
-        y: 187
-        width: 127
-        height: 126
+        x: 56
+        y: 552
+        width: 695
+        height: 186
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0d48d540fbde9b990800000000000000
-      internalID: -7369597910547331888
+      spriteID: 663df730f9988b4e0800000000000000
+      internalID: -1965669921295707290
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Colorful_game_buttons_02-removebg-preview_4
+      name: ChatGPT Image Dec 17, 2025, 12_03_07 AM_4
       rect:
         serializedVersion: 2
-        x: 187
-        y: 187
-        width: 126
-        height: 126
+        x: 701
+        y: 727
+        width: 12
+        height: 13
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6a524caafc08c7820800000000000000
-      internalID: 2917348288040805798
+      spriteID: 17293fcf535eb60c0800000000000000
+      internalID: -4581316175879499151
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Colorful_game_buttons_02-removebg-preview_5
+      name: ChatGPT Image Dec 17, 2025, 12_03_07 AM_5
       rect:
         serializedVersion: 2
-        x: 350
-        y: 187
-        width: 127
-        height: 126
+        x: 739
+        y: 678
+        width: 14
+        height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a11111f0f8795f9e0800000000000000
-      internalID: -1588196652889337574
+      spriteID: 874d8812e172c9950800000000000000
+      internalID: 6457078976107566200
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Colorful_game_buttons_02-removebg-preview_6
+      name: ChatGPT Image Dec 17, 2025, 12_03_07 AM_6
       rect:
         serializedVersion: 2
-        x: 24
-        y: 28
-        width: 126
-        height: 126
+        x: 64
+        y: 242
+        width: 666
+        height: 189
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a4ce1b5aa314c67f0800000000000000
-      internalID: -618047328712790966
+      spriteID: 64178f23f57f578c0800000000000000
+      internalID: -4002020705599721146
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Colorful_game_buttons_02-removebg-preview_7
+      name: ChatGPT Image Dec 17, 2025, 12_03_07 AM_7
       rect:
         serializedVersion: 2
-        x: 187
-        y: 28
-        width: 126
-        height: 126
+        x: 112
+        y: 422
+        width: 8
+        height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1a9a436bf66ada160800000000000000
-      internalID: 7038464791378438561
+      spriteID: 835a0ea283ab82630800000000000000
+      internalID: 3902573827516835128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Colorful_game_buttons_02-removebg-preview_8
+      name: ChatGPT Image Dec 17, 2025, 12_03_07 AM_8
       rect:
         serializedVersion: 2
-        x: 350
-        y: 28
-        width: 127
-        height: 126
+        x: 670
+        y: 420
+        width: 11
+        height: 13
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0de5e2bb896acdb20800000000000000
-      internalID: 3160584213412863696
+      spriteID: df475983d97089960800000000000000
+      internalID: 7608839942283031805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChatGPT Image Dec 17, 2025, 12_03_07 AM_9
+      rect:
+        serializedVersion: 2
+        x: 719
+        y: 345
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8448268570b406fb0800000000000000
+      internalID: -4656639519781387192
       vertices: []
       indices: 
       edges: []
@@ -351,7 +376,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 9615da15557e2c64d9a80eb05dd3556d
     internalID: 0
     vertices: []
     indices: 
@@ -361,15 +386,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Colorful_game_buttons_02-removebg-preview_0: -2117104560170110070
-      Colorful_game_buttons_02-removebg-preview_1: 1902270367751906820
-      Colorful_game_buttons_02-removebg-preview_2: 1924486753221853120
-      Colorful_game_buttons_02-removebg-preview_3: -7369597910547331888
-      Colorful_game_buttons_02-removebg-preview_4: 2917348288040805798
-      Colorful_game_buttons_02-removebg-preview_5: -1588196652889337574
-      Colorful_game_buttons_02-removebg-preview_6: -618047328712790966
-      Colorful_game_buttons_02-removebg-preview_7: 7038464791378438561
-      Colorful_game_buttons_02-removebg-preview_8: 3160584213412863696
+      ChatGPT Image Dec 17, 2025, 12_03_07 AM_0: -8625984115593173560
+      ChatGPT Image Dec 17, 2025, 12_03_07 AM_1: -1442865112476868042
+      ChatGPT Image Dec 17, 2025, 12_03_07 AM_2: -9116922129359179391
+      ChatGPT Image Dec 17, 2025, 12_03_07 AM_3: -1965669921295707290
+      ChatGPT Image Dec 17, 2025, 12_03_07 AM_4: -4581316175879499151
+      ChatGPT Image Dec 17, 2025, 12_03_07 AM_5: 6457078976107566200
+      ChatGPT Image Dec 17, 2025, 12_03_07 AM_6: -4002020705599721146
+      ChatGPT Image Dec 17, 2025, 12_03_07 AM_7: 3902573827516835128
+      ChatGPT Image Dec 17, 2025, 12_03_07 AM_8: 7608839942283031805
+      ChatGPT Image Dec 17, 2025, 12_03_07 AM_9: -4656639519781387192
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using KNC.PowerBar;
-using KNC.Core.Services;
+using KNC.UI;
 
 namespace KNC.Player
 {

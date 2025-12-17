@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: -8154093924451759471, guid: 3aeecf906181150479b1dbca8d3911a0, type: 3}
   PlayerSpawnPos: {x: -2, y: -0.55, z: 0}
-  PlayerMoveSpeed: 3
+  PlayerMoveSpeed: 4
   MinX: -2.2
   MaxX: 0.5
   PowerBarSO: {fileID: 11400000, guid: b8cfbd37db0e3d841ac535a9596d0639, type: 2}

@@ -13,6 +13,7 @@ namespace KNC.Core.Services
         public EventController<int> OnScoreChanged = new EventController<int>();
         public EventController<int> OnHighScoreChanged = new EventController<int>();
         public EventController OnGameReset = new EventController();
+        public EventController OnGameOver = new EventController();
 
         public void RaiseKickStarted() => OnKickStarted?.InvokeEvent();
         public void RaisePowerChanged(float v) => OnPowerChanged?.InvokeEvent(v);
@@ -22,6 +23,7 @@ namespace KNC.Core.Services
         public void RaiseScoreChanged(int s) => OnScoreChanged?.InvokeEvent(s);
         public void RaiseHighScoreChanged(int s) => OnHighScoreChanged?.InvokeEvent(s);
         public void RaiseGameReset() => OnGameReset?.InvokeEvent();
+        public void RaiseGameOver() => OnGameOver.InvokeEvent();
     }
 
     public class EventController

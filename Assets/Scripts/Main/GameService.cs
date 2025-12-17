@@ -51,11 +51,6 @@ namespace KNC.Main
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if (scene.buildIndex == 0)
-            {
-                ScoreService.Instance.ResetScore();
-            }
-
             InitializeControllers();
             playerController.SetMovementEnabled(true);
         }
@@ -120,7 +115,12 @@ namespace KNC.Main
         private void OnBallMissed()
         {
             CurrentRoundState = RoundState.Resolving;
-            SceneManager.LoadScene(0);
+
+            playerController.PowerBar.Reset();
+            playerController.PowerBarView.Hide();
+            playerController.EnterMoveMode();
+
+            EventService.Instance.RaiseGameOver();
         }
 
         private System.Collections.IEnumerator DelayedResetSequence()

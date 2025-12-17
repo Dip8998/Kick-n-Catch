@@ -25,7 +25,7 @@ namespace KNC.UI
 
         private void UpdateHighScore(int value)
         {
-            highScoreText.text = $"Total Catch: {value}";
+            highScoreText.text = $"Best: {value}";
         }
     }
 }
