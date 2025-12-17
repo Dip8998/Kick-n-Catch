@@ -22,7 +22,7 @@ namespace KNC.Player.StateMachine.States
             else
                 Owner.Move(Time.fixedDeltaTime);
         }
-
+    
         public void OnStateExit() { }
     }
 }

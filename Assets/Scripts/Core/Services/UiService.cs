@@ -1,9 +1,9 @@
 using UnityEngine;
-using KNC.Core.Services;
 using KNC.Utilities;
 using KNC.PowerBar;
+using KNC.UI;
 
-namespace KNC.UI
+namespace KNC.Core.Services
 {
     public class UIService : GenericMonoSingleton<UIService>
     {

@@ -24,7 +24,7 @@ namespace KNC.Main
 
         private Vector3 playerStartPos;
         private Vector3 ballStartPos;
-        private float resetDelayTime = 2f;
+        private float resetDelayTime = 3f;
 
         [SerializeField] private RampScriptableObject rampScriptableObject;
         [SerializeField] private PlayerScriptableObject playerScriptableObject;

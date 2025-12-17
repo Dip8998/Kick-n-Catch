@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using KNC.Core.Services;
+using UnityEngine;
 
 namespace KNC.UI
 {
