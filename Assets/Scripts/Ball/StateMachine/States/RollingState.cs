@@ -3,7 +3,7 @@
     public class RollingState : IBallState
     {
         public BallController Owner { get; set; }
-        private BallStateMachine sm;
+        private readonly BallStateMachine sm;
 
         public RollingState(BallStateMachine sm) => this.sm = sm;
 
@@ -15,9 +15,7 @@
                 return;
 
             if (Owner.IsAirborne())
-            {
                 sm.ChangeState(BallState.Airborne);
-            }
         }
 
         public void OnStateExit() { }

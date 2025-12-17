@@ -1,11 +1,11 @@
-﻿using KNC.Core.Services;
-using UnityEngine;
+﻿using UnityEngine;
+using KNC.Core.Services;
 
 namespace KNC.UI
 {
     public class MainMenuUIController : IUIController
     {
-        private MainMenuUIView view;
+        private readonly MainMenuUIView view;
 
         public MainMenuUIController(MainMenuUIView view)
         {

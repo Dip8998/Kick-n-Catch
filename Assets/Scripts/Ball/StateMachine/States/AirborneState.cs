@@ -3,7 +3,7 @@
     public class AirborneState : IBallState
     {
         public BallController Owner { get; set; }
-        private BallStateMachine sm;
+        private readonly BallStateMachine sm;
 
         public AirborneState(BallStateMachine sm) => this.sm = sm;
 
@@ -14,12 +14,10 @@
             if (!Owner.HasBeenKicked || Owner.IsResolving)
                 return;
 
-            if (!Owner.IsAirborne())
+            if (!Owner.IsAirborne() &&
+                Owner.Rigidbody.linearVelocity.magnitude < BallController.MissVelocityThreshold)
             {
-                if (Owner.Rigidbody.linearVelocity.magnitude < BallController.MissVelocityThreshold)
-                {
-                    Owner.Miss();
-                }
+                Owner.Miss();
             }
         }
 

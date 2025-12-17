@@ -1,39 +1,32 @@
-using UnityEngine;
 using KNC.Utilities;
-using KNC.PowerBar;
-using KNC.UI;
+using UnityEngine;
 
 namespace KNC.Core.Services
 {
     public class UIService : GenericMonoSingleton<UIService>
     {
-        [Header("Views")]
-        [SerializeField] private MainMenuUIView mainMenuView;
-        [SerializeField] private GameplayUIView gameplayView;
-        [SerializeField] private GameOverUIView gameOverView;
-        [SerializeField] private PowerBarView powerBarView;
+        [SerializeField] private KNC.UI.MainMenuUIView mainMenuView;
+        [SerializeField] private KNC.UI.GameplayUIView gameplayView;
+        [SerializeField] private KNC.UI.GameOverUIView gameOverView;
+        [SerializeField] private KNC.PowerBar.PowerBarView powerBarView;
 
-        public PowerBarView PowerBarView => powerBarView;
-        private MainMenuUIController mainMenuController;
-        private GameplayUIController gameplayController;
-        private GameOverUIController gameOverController;
+        public KNC.PowerBar.PowerBarView PowerBarView => powerBarView;
+
+        private KNC.UI.MainMenuUIController mainMenuController;
+        private KNC.UI.GameplayUIController gameplayController;
+        private KNC.UI.GameOverUIController gameOverController;
 
         protected override void Awake()
         {
             base.Awake();
 
-            mainMenuController = new MainMenuUIController(mainMenuView);
-            gameplayController = new GameplayUIController(gameplayView, this);
-            gameOverController = new GameOverUIController(gameOverView);
+            mainMenuController = new(mainMenuView);
+            gameplayController = new(gameplayView, this);
+            gameOverController = new(gameOverView);
 
-            SubscribeEvents();
-        }
-
-        private void SubscribeEvents()
-        {
-            EventService.Instance.OnBallCaught.AddListener(gameplayController.OnBallCaught);
-            EventService.Instance.OnBallMissed.AddListener(gameOverController.Show);
-            EventService.Instance.OnGameOver.AddListener(ShowGameOver);
+            var es = EventService.Instance;
+            es.OnBallCaught.AddListener(gameplayController.OnBallCaught);
+            es.OnGameOver.AddListener(ShowGameOver);
         }
 
         public void ShowMainMenu()
@@ -53,12 +46,9 @@ namespace KNC.Core.Services
         private void ShowGameOver()
         {
             gameplayController.Hide();
-            gameOverController.Show();   
+            gameOverController.Show();
         }
 
-        public void HideGameplayUI()
-        {
-            gameplayController.Hide();
-        }
+        public void HideGameplayUI() => gameplayController.Hide();
     }
 }

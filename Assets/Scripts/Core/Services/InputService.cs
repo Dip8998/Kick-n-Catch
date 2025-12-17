@@ -28,9 +28,6 @@ namespace KNC.Core.Services
             kickReleased = true;
         }
 
-        public void ResetKickRelease()
-        {
-            kickReleased = false;
-        }
+        public void ResetKickRelease() => kickReleased = false;
     }
 }

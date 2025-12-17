@@ -2,34 +2,27 @@
 
 namespace KNC.Utilities
 {
-    public abstract class GenericMonoSingleton<T> : MonoBehaviour where T : GenericMonoSingleton<T>
+    public abstract class GenericMonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         private static T instance;
-        public static T Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = FindFirstObjectByType<T>();
-                    if (instance == null)
-                        instance = new GameObject(typeof(T).Name).AddComponent<T>();
-                }
-                return instance;
-            }
-        }
+        public static T Instance => instance;
 
         protected virtual void Awake()
         {
             if (instance == null)
             {
-                instance = (T)this;
+                instance = this as T;
             }
-            else
+            else if (instance != this)
             {
                 Destroy(gameObject);
             }
         }
-        protected virtual void OnDestroy() { }
+
+        protected virtual void OnDestroy()
+        {
+            if (instance == this)
+                instance = null;
+        }
     }
 }

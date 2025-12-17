@@ -1,12 +1,12 @@
-﻿using KNC.Core.Services;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using KNC.Core.Services;
 
 namespace KNC.UI
 {
     public class GameOverUIController : IUIController
     {
-        private GameOverUIView view;
+        private readonly GameOverUIView view;
 
         public GameOverUIController(GameOverUIView view)
         {
@@ -29,24 +29,27 @@ namespace KNC.UI
         public void OnReload()
         {
             UIService.Instance.HideGameplayUI();
-
             Time.timeScale = 1f;
-
             view.StartCoroutine(ShowGameplayNextFrame());
         }
 
-        private System.Collections.IEnumerator ShowGameplayNextFrame()
+        private IEnumerator ShowGameplayNextFrame()
         {
-            yield return new WaitForSeconds(.7f); 
-            UIService.Instance.ShowGameplayUI();
+            yield return new WaitForSeconds(0.7f);
             ScoreService.Instance.ResetScore();
             EventService.Instance.RaiseGameReset();
+            UIService.Instance.ShowGameplayUI();
         }
-
 
         public void OnHome()
         {
             Hide();
+
+            Time.timeScale = 1f;
+
+            ScoreService.Instance.ResetScore();
+            EventService.Instance.RaiseGameReset();
+
             UIService.Instance.ShowMainMenu();
         }
     }

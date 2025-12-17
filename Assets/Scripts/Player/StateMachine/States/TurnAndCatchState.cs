@@ -5,7 +5,7 @@ namespace KNC.Player.StateMachine.States
     public class TurnAndCatchState : IPlayerState
     {
         public PlayerController Owner { get; set; }
-        private PlayerStateMachine sm;
+        private readonly PlayerStateMachine sm;
 
         public TurnAndCatchState(PlayerStateMachine sm) => this.sm = sm;
 

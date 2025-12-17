@@ -10,20 +10,12 @@ namespace KNC.UI
 
         private void OnEnable()
         {
-            if (ScoreService.Instance != null)
-                UpdateScore(ScoreService.Instance.Score);
+            UpdateScore(ScoreService.Instance.Score);
         }
 
-        private void Start()
+        private void Awake()
         {
-            if (ScoreService.Instance == null || EventService.Instance == null)
-            {
-                enabled = false;
-                return;
-            }
-
             EventService.Instance.OnScoreChanged.AddListener(UpdateScore);
-            UpdateScore(ScoreService.Instance.Score);
         }
 
         private void OnDestroy()
@@ -34,7 +26,7 @@ namespace KNC.UI
 
         private void UpdateScore(int value)
         {
-            scoreText.text = "Catch: " + value.ToString();
+            scoreText.text = $"Catch: {value}";
         }
     }
 }

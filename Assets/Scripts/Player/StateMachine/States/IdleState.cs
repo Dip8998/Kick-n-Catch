@@ -3,7 +3,7 @@
     public class IdleState : IPlayerState
     {
         public PlayerController Owner { get; set; }
-        private PlayerStateMachine sm;
+        private readonly PlayerStateMachine sm;
 
         public IdleState(PlayerStateMachine sm) => this.sm = sm;
 

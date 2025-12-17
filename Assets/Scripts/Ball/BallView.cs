@@ -22,17 +22,16 @@ namespace KNC.Ball
             controller.FixedTick();
         }
 
-        private void OnCollisionEnter2D(Collision2D c)
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (c.collider.CompareTag("Ramp"))
+            if (collision.collider.CompareTag("Ramp"))
                 controller.OnGroundContact(true);
         }
 
-        private void OnCollisionExit2D(Collision2D c)
+        private void OnCollisionExit2D(Collision2D collision)
         {
-            if (c.collider.CompareTag("Ramp"))
+            if (collision.collider.CompareTag("Ramp"))
                 controller.OnGroundContact(false);
         }
-
     }
 }

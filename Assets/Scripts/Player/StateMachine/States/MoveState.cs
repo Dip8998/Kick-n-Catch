@@ -6,7 +6,7 @@ namespace KNC.Player.StateMachine.States
     public class MoveState : IPlayerState
     {
         public PlayerController Owner { get; set; }
-        private PlayerStateMachine sm;
+        private readonly PlayerStateMachine sm;
 
         public MoveState(PlayerStateMachine sm) => this.sm = sm;
 
@@ -22,7 +22,7 @@ namespace KNC.Player.StateMachine.States
             else
                 Owner.Move(Time.fixedDeltaTime);
         }
-    
+
         public void OnStateExit() { }
     }
 }

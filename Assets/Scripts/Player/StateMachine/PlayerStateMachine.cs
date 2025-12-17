@@ -6,23 +6,17 @@ namespace KNC.Player.StateMachine
     public class PlayerStateMachine
     {
         private IPlayerState currentState;
-        private PlayerController owner;
+        private readonly Dictionary<PlayerState, IPlayerState> states = new();
 
         public PlayerState CurrentState { get; private set; }
 
-        private Dictionary<PlayerState, IPlayerState> states = new();
-
         public PlayerStateMachine(PlayerController owner)
         {
-            this.owner = owner;
-            states.Add(PlayerState.Idle, new IdleState(this));
-            states.Add(PlayerState.Move, new MoveState(this));
-            states.Add(PlayerState.Aim, new AimState(this));
-            states.Add(PlayerState.Kick, new KickState(this));
-            states.Add(PlayerState.TurnAndCatch, new TurnAndCatchState(this));
-
-            foreach (var s in states.Values)
-                s.Owner = owner;
+            states.Add(PlayerState.Idle, new IdleState(this) { Owner = owner });
+            states.Add(PlayerState.Move, new MoveState(this) { Owner = owner });
+            states.Add(PlayerState.Aim, new AimState(this) { Owner = owner });
+            states.Add(PlayerState.Kick, new KickState(this) { Owner = owner });
+            states.Add(PlayerState.TurnAndCatch, new TurnAndCatchState(this) { Owner = owner });
 
             ChangeState(PlayerState.Idle);
         }

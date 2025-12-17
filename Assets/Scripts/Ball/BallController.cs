@@ -1,18 +1,18 @@
-﻿using KNC.Ball.StateMachine;
+﻿using UnityEngine;
 using KNC.Core.Services;
+using KNC.Ball.StateMachine;
 using System;
-using UnityEngine;
 
 namespace KNC.Ball
 {
     public class BallController
     {
-        private BallStateMachine sm;
-        private BallScriptableObject so;
+        private BallStateMachine stateMachine;
+        private readonly BallScriptableObject so;
         private BallView view;
         private Rigidbody2D rb;
-        private KickZone kickZone;
         private Collider2D ballCollider;
+        private KickZone kickZone;
 
         private int groundContacts;
         private bool isResolved;
@@ -22,12 +22,13 @@ namespace KNC.Ball
         private const float MaxKickDistance = 1.0f;
         private const float MaxResolveTime = 4f;
 
+        public const float MissVelocityThreshold = 0.1f;
+
         public Rigidbody2D Rigidbody => rb;
         public Collider2D BallCollider => ballCollider;
         public BallView View => view;
         public bool HasBeenKicked { get; private set; }
         public bool IsResolving => isResolved;
-        public const float MissVelocityThreshold = 0.1f;
 
         public BallController(BallScriptableObject so)
         {
@@ -48,12 +49,12 @@ namespace KNC.Ball
             kickZone = view.GetComponentInChildren<KickZone>();
             kickZone.Initialize(this);
 
-            sm = new BallStateMachine(this);
+            stateMachine = new BallStateMachine(this);
         }
 
         public void Tick()
         {
-            sm.Update();
+            stateMachine.Update();
 
             if (!HasBeenKicked || isResolved)
                 return;
@@ -95,13 +96,36 @@ namespace KNC.Ball
                 Mathf.InverseLerp(4f, 14f, speed)
             );
 
-            EventService.Instance.RaiseKickStarted(); 
-            sm.ChangeState(BallState.Airborne);
+            EventService.Instance.RaiseKickStarted();
+            stateMachine.ChangeState(BallState.Airborne);
         }
 
         public bool CanBeCaught()
         {
             return !isResolved && HasBeenKicked;
+        }
+
+        public void Catch()
+        {
+            if (isResolved)
+                return;
+
+            Resolve();
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+
+            stateMachine.ChangeState(BallState.Caught);
+            EventService.Instance.RaiseBallCaught();
+        }
+
+        public void Miss()
+        {
+            if (isResolved)
+                return;
+
+            Resolve();
+            stateMachine.ChangeState(BallState.Missed);
+            EventService.Instance.RaiseBallMissed();
         }
 
         private void Resolve()
@@ -110,48 +134,17 @@ namespace KNC.Ball
             catchTimer = 0f;
         }
 
-        private void ResolveAs(BallState state, Action callback)
-        {
-            if (isResolved) return;
-
-            Resolve();
-            sm.ChangeState(state);
-            callback?.Invoke();
-        }
-
-        public void Catch()
-        {
-            if (isResolved) return;
-
-            isResolved = true;
-            catchTimer = 0f;
-
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-
-            sm.ChangeState(BallState.Caught);
-            EventService.Instance.RaiseBallCaught(); 
-        }
-
-        public void Miss()
-        {
-            if (isResolved) return;
-
-            Resolve();
-            sm.ChangeState(BallState.Missed);
-            EventService.Instance.RaiseBallMissed();
-        }
-
         public void ResetBall(Vector3 position)
         {
             SetKickZoneActive(false);
+
             HasBeenKicked = false;
             isResolved = false;
             resolveTimer = 0f;
             catchTimer = 0f;
             groundContacts = 0;
 
-            sm.ChangeState(BallState.Waiting);
+            stateMachine.ChangeState(BallState.Waiting);
 
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;

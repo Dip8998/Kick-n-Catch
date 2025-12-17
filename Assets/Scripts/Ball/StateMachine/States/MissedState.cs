@@ -3,7 +3,7 @@
     public class MissedState : IBallState
     {
         public BallController Owner { get; set; }
-        private BallStateMachine sm;
+        private readonly BallStateMachine sm;
 
         public MissedState(BallStateMachine sm) => this.sm = sm;
 
@@ -13,7 +13,6 @@
         }
 
         public void Update() { }
-
         public void OnStateExit() { }
     }
 }

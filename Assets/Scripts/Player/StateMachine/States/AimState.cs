@@ -6,18 +6,12 @@ namespace KNC.Player.StateMachine.States
     public class AimState : IPlayerState
     {
         public PlayerController Owner { get; set; }
-        private PlayerStateMachine sm;
+        private readonly PlayerStateMachine sm;
 
         public AimState(PlayerStateMachine sm) => this.sm = sm;
 
         public void OnStateEnter()
         {
-            if (Owner.BallController.IsResolving)
-            {
-                sm.ChangeState(PlayerState.Move);
-                return;
-            }
-
             InputService.Instance.ReleaseMove();
             Owner.SetMovementEnabled(false);
             Owner.PowerBarView.Show();

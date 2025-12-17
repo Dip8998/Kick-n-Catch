@@ -7,19 +7,22 @@ namespace KNC.Ball
     {
         private BallController ball;
 
-        public void Initialize(BallController b) => ball = b;
+        public void Initialize(BallController controller)
+        {
+            ball = controller;
+        }
 
-        private void OnTriggerEnter2D(Collider2D c)
+        private void OnTriggerEnter2D(Collider2D collider)
         {
             if (ball.IsResolving)
                 return;
 
-            c.GetComponent<PlayerView>()?.Controller.OnEnterKickZone();
+            collider.GetComponent<PlayerView>()?.Controller.OnEnterKickZone();
         }
 
-        private void OnTriggerExit2D(Collider2D c)
+        private void OnTriggerExit2D(Collider2D collider)
         {
-            c.GetComponent<PlayerView>()?.Controller.OnExitKickZone();
+            collider.GetComponent<PlayerView>()?.Controller.OnExitKickZone();
         }
     }
 }

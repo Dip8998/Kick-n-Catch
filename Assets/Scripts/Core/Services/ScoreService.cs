@@ -1,5 +1,4 @@
 ﻿using KNC.Utilities;
-using System;
 using UnityEngine;
 
 namespace KNC.Core.Services
@@ -17,11 +16,6 @@ namespace KNC.Core.Services
         protected override void Awake()
         {
             base.Awake();
-            LoadHighScore();
-        }
-
-        private void LoadHighScore()
-        {
             highScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY, 0);
         }
 
@@ -41,14 +35,8 @@ namespace KNC.Core.Services
                 highScore = score;
                 PlayerPrefs.SetInt(HIGH_SCORE_KEY, highScore);
                 PlayerPrefs.Save();
-
                 EventService.Instance.RaiseHighScoreChanged(highScore);
             }
-        }
-
-        private void OnApplicationQuit()
-        {
-            Destroy(gameObject);
         }
     }
 }

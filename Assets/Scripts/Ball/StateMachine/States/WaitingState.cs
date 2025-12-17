@@ -3,7 +3,7 @@ namespace KNC.Ball.StateMachine.States
     public class WaitingState : IBallState
     {
         public BallController Owner { get; set; }
-        private BallStateMachine sm;
+        private readonly BallStateMachine sm;
 
         public WaitingState(BallStateMachine sm) => this.sm = sm;
 
@@ -13,7 +13,6 @@ namespace KNC.Ball.StateMachine.States
         }
 
         public void Update() { }
-
         public void OnStateExit() { }
     }
 }

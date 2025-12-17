@@ -8,11 +8,8 @@ namespace KNC.UI
     {
         [SerializeField] private TextMeshProUGUI highScoreText;
 
-        private void Start()
+        private void Awake()
         {
-            if (ScoreService.Instance == null || EventService.Instance == null)
-                return;
-
             EventService.Instance.OnHighScoreChanged.AddListener(UpdateHighScore);
             UpdateHighScore(ScoreService.Instance.HighScore);
         }

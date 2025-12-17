@@ -5,13 +5,13 @@ namespace KNC.UI
 {
     public class GameplayUIController : IUIController
     {
-        private GameplayUIView view;
-        private MonoBehaviour coroutineRunner;
+        private readonly GameplayUIView view;
+        private readonly MonoBehaviour coroutineRunner;
 
         public GameplayUIController(GameplayUIView view, MonoBehaviour runner)
         {
             this.view = view;
-            this.coroutineRunner = runner;
+            coroutineRunner = runner;
             view.SetController(this);
             Hide();
         }
@@ -30,10 +30,6 @@ namespace KNC.UI
         public void OnBallCaught()
         {
             view.ShowGoodCatch();
-        }
-
-        public void HideGoodCatchDelayed()
-        {
             coroutineRunner.StartCoroutine(HideGoodCatchRoutine());
         }
 

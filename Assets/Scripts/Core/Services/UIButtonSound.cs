@@ -9,10 +9,9 @@ namespace KNC.Core.Services
     {
         private void Awake()
         {
-            GetComponent<Button>().onClick.AddListener(() =>
-            {
-                SoundService.Instance.Play(SoundService.Sounds.BUTTONCLICK);
-            });
+            GetComponent<Button>().onClick.AddListener(
+                () => SoundService.Instance.Play(SoundService.Sounds.BUTTONCLICK)
+            );
         }
     }
 }

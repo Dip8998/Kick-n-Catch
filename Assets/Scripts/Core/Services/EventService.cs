@@ -5,40 +5,40 @@ namespace KNC.Core.Services
 {
     public class EventService : GenericMonoSingleton<EventService>
     {
-        public EventController OnKickStarted = new EventController();
-        public EventController<float> OnPowerChanged = new EventController<float>();
-        public EventController OnPowerReleased = new EventController();
-        public EventController OnBallCaught = new EventController();
-        public EventController OnBallMissed = new EventController();
-        public EventController<int> OnScoreChanged = new EventController<int>();
-        public EventController<int> OnHighScoreChanged = new EventController<int>();
-        public EventController OnGameReset = new EventController();
-        public EventController OnGameOver = new EventController();
+        public readonly EventController OnKickStarted = new();
+        public readonly EventController<float> OnPowerChanged = new();
+        public readonly EventController OnPowerReleased = new();
+        public readonly EventController OnBallCaught = new();
+        public readonly EventController OnBallMissed = new();
+        public readonly EventController<int> OnScoreChanged = new();
+        public readonly EventController<int> OnHighScoreChanged = new();
+        public readonly EventController OnGameReset = new();
+        public readonly EventController OnGameOver = new();
 
-        public void RaiseKickStarted() => OnKickStarted?.InvokeEvent();
-        public void RaisePowerChanged(float v) => OnPowerChanged?.InvokeEvent(v);
-        public void RaisePowerReleased() => OnPowerReleased?.InvokeEvent();
-        public void RaiseBallCaught() => OnBallCaught?.InvokeEvent();
-        public void RaiseBallMissed() => OnBallMissed?.InvokeEvent();
-        public void RaiseScoreChanged(int s) => OnScoreChanged?.InvokeEvent(s);
-        public void RaiseHighScoreChanged(int s) => OnHighScoreChanged?.InvokeEvent(s);
-        public void RaiseGameReset() => OnGameReset?.InvokeEvent();
+        public void RaiseKickStarted() => OnKickStarted.InvokeEvent();
+        public void RaisePowerChanged(float v) => OnPowerChanged.InvokeEvent(v);
+        public void RaisePowerReleased() => OnPowerReleased.InvokeEvent();
+        public void RaiseBallCaught() => OnBallCaught.InvokeEvent();
+        public void RaiseBallMissed() => OnBallMissed.InvokeEvent();
+        public void RaiseScoreChanged(int s) => OnScoreChanged.InvokeEvent(s);
+        public void RaiseHighScoreChanged(int s) => OnHighScoreChanged.InvokeEvent(s);
+        public void RaiseGameReset() => OnGameReset.InvokeEvent();
         public void RaiseGameOver() => OnGameOver.InvokeEvent();
     }
 
     public class EventController
     {
-        public event Action baseEvent;
-        public void InvokeEvent() => baseEvent?.Invoke();
-        public void AddListener(Action listener) => baseEvent += listener;
-        public void RemoveListener(Action listener) => baseEvent -= listener;
+        private event Action handlers;
+        public void InvokeEvent() => handlers?.Invoke();
+        public void AddListener(Action listener) => handlers += listener;
+        public void RemoveListener(Action listener) => handlers -= listener;
     }
 
     public class EventController<T>
     {
-        public event Action<T> baseEvent;
-        public void InvokeEvent(T type) => baseEvent?.Invoke(type);
-        public void AddListener(Action<T> listener) => baseEvent += listener;
-        public void RemoveListener(Action<T> listener) => baseEvent -= listener;
+        private event Action<T> handlers;
+        public void InvokeEvent(T value) => handlers?.Invoke(value);
+        public void AddListener(Action<T> listener) => handlers += listener;
+        public void RemoveListener(Action<T> listener) => handlers -= listener;
     }
 }

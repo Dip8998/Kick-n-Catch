@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
-using TMPro;
 
 namespace KNC.UI
 {
     public class GameplayUIView : MonoBehaviour, IUIView
     {
-        private GameplayUIController controller;
-
         [SerializeField] private GameObject goodCatchText;
 
+        private GameplayUIController controller;
+
         public void SetController(IUIController controller)
-            => this.controller = controller as GameplayUIController;
+        {
+            this.controller = controller as GameplayUIController;
+        }
 
         public void EnableView() => gameObject.SetActive(true);
         public void DisableView() => gameObject.SetActive(false);
@@ -18,9 +19,11 @@ namespace KNC.UI
         public void ShowGoodCatch()
         {
             goodCatchText.SetActive(true);
-            controller.HideGoodCatchDelayed();
         }
 
-        public void HideGoodCatch() => goodCatchText.SetActive(false);
+        public void HideGoodCatch()
+        {
+            goodCatchText.SetActive(false);
+        }
     }
 }

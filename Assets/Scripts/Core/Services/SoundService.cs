@@ -1,88 +1,75 @@
-﻿using KNC.Utilities;
-using System;
+﻿using System;
+using KNC.Utilities;
 using UnityEngine;
 
 namespace KNC.Core.Services
 {
     public class SoundService : GenericMonoSingleton<SoundService>
     {
-        public AudioSource soundEffect;
-        public AudioSource soundMusic;
+        [SerializeField] private AudioSource soundEffect;
+        [SerializeField] private AudioSource soundMusic;
+        [SerializeField] private SoundItem[] sounds;
 
-        public bool isMute = false;
-        public float Volume = 1.0f;
-        public SoundItem[] sounds;
-
+        public bool isMute;
 
         private void OnEnable()
         {
-            if (EventService.Instance == null)
-                return;
+            var es = EventService.Instance;
+            if (es == null) return;
 
-            EventService.Instance.OnKickStarted.AddListener(OnKick);
-            EventService.Instance.OnBallCaught.AddListener(OnCaught);
-            EventService.Instance.OnBallMissed.AddListener(OnMissed);
+            es.OnKickStarted.AddListener(OnKick);
+            es.OnBallCaught.AddListener(OnCaught);
+            es.OnBallMissed.AddListener(OnMissed);
         }
 
         private void Start()
         {
             PlayMusic(Sounds.MUSIC);
-            SetVolume(Volume);
         }
 
-        private void SetVolume(float volume)
+        private void OnDisable()
         {
-            soundMusic.volume = volume;
+            var es = EventService.Instance;
+            if (es == null) return;
+
+            es.OnKickStarted.RemoveListener(OnKick);
+            es.OnBallCaught.RemoveListener(OnCaught);
+            es.OnBallMissed.RemoveListener(OnMissed);
         }
 
         public void PlayMusic(Sounds sound)
         {
-            if (isMute)
-                return;
+            if (isMute) return;
 
-            AudioClip clip = GetSoundClip(sound);
+            var clip = GetClip(sound);
+            if (clip == null) return;
 
-            if (clip != null)
-            {
-                soundMusic.clip = clip;
-                soundMusic.Play();
-            }
-            else
-            {
-                Debug.LogError("Clip not found for sound type: " + sound);
-            }
+            soundMusic.clip = clip;
+            soundMusic.Play();
         }
 
         public void Play(Sounds sound)
         {
-            if (isMute)
-                return;
+            if (isMute) return;
 
-            AudioClip clip = GetSoundClip(sound);
+            var clip = GetClip(sound);
+            if (clip == null) return;
 
-            if (clip != null)
-            {
-                soundEffect.PlayOneShot(clip);
-            }
-            else
-            {
-                Debug.LogError("Clip not found for sound type: " + sound);
-            }
+            soundEffect.PlayOneShot(clip);
         }
 
-        private AudioClip GetSoundClip(Sounds sound)
+        private AudioClip GetClip(Sounds sound)
         {
-            SoundItem item = Array.Find(sounds, i => i.soundTypes == sound);
-
-            if (item != null)
-            {
-                return item.audioClip;
-            }
+            foreach (var s in sounds)
+                if (s.soundTypes == sound)
+                    return s.audioClip;
 
             return null;
         }
 
-
+        private void OnKick() => Play(Sounds.KICK);
+        private void OnCaught() => Play(Sounds.CAUGHT);
+        private void OnMissed() => Play(Sounds.GAMEOVER);
 
         [Serializable]
         public class SoundItem
@@ -98,31 +85,6 @@ namespace KNC.Core.Services
             CAUGHT,
             MUSIC,
             KICK
-        }
-
-        private void OnDisable()
-        {
-            if (EventService.Instance == null)
-                return;
-
-            EventService.Instance.OnKickStarted.RemoveListener(OnKick);
-            EventService.Instance.OnBallCaught.RemoveListener(OnCaught);
-            EventService.Instance.OnBallMissed.RemoveListener(OnMissed);
-        }
-
-        private void OnKick()
-        {
-            Play(Sounds.KICK);
-        }
-
-        private void OnCaught()
-        {
-            Play(Sounds.CAUGHT);
-        }
-
-        private void OnMissed()
-        {
-            Play(Sounds.GAMEOVER);
         }
     }
 }
