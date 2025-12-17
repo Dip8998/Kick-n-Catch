@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using KNC.Main;
+using UnityEngine;
 
 namespace KNC.Player.StateMachine.States
 {
@@ -13,6 +14,9 @@ namespace KNC.Player.StateMachine.States
 
         public void Update()
         {
+            if (GameService.Instance.CurrentRoundState == RoundState.Resolving)
+                return;
+
             if (Owner.MoveInput == 0f)
                 sm.ChangeState(PlayerState.Idle);
             else

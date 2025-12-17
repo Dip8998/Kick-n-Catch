@@ -103,12 +103,15 @@ namespace KNC.Main
         {
             CurrentRoundState = RoundState.Resolving;
 
+            playerController.SetMovementEnabled(false); 
+            playerController.FreezePlayer(true);       
+
             ScoreService.Instance.AddScore(1);
 
             playerController.PowerBar.Reset();
             playerController.PowerBarView.Hide();
             playerController.EnterMoveMode();
-
+            ballController.StopBall();
             StartCoroutine(DelayedResetSequence());
         }
 
@@ -116,10 +119,13 @@ namespace KNC.Main
         {
             CurrentRoundState = RoundState.Resolving;
 
+            playerController.SetMovementEnabled(false); 
+            playerController.FreezePlayer(true);       
+
             playerController.PowerBar.Reset();
             playerController.PowerBarView.Hide();
             playerController.EnterMoveMode();
-
+            ballController.StopBall();
             EventService.Instance.RaiseGameOver();
         }
 
@@ -140,8 +146,10 @@ namespace KNC.Main
             prb.position = playerStartPos;
             prb.Sleep();
 
+            playerController.FreezePlayer(false);      
+            playerController.SetMovementEnabled(true);  
+
             playerController.EnterMoveMode();
-            playerController.SetMovementEnabled(true);
             playerController.PowerBarView.Hide();
             playerController.View.transform.localScale = playerController.InitialScale;
 

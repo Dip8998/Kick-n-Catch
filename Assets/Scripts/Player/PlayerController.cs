@@ -49,11 +49,24 @@ namespace KNC.Player
 
         public void ReadInput()
         {
+            if (GameService.Instance.CurrentRoundState == RoundState.Resolving)
+            {
+                MoveInput = 0f;
+                IsKickReleased = false;
+                return;
+            }
+
             MoveInput = InputService.Instance.Horizontal;
             IsKickReleased = InputService.Instance.KickReleased;
         }
 
-        public void Tick() => sm.Update();
+        public void Tick()
+        {
+            if (GameService.Instance.CurrentRoundState == RoundState.Resolving)
+                return;
+
+            sm.Update();
+        }
 
         public void Move(float fixedDeltaTime)
         {

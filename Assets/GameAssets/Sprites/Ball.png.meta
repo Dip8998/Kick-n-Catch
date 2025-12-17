@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5095e6b21d5a4f2429d17ab8051a9c7c
+guid: fdaedf69fc604fe41b83068a0173aadb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4727389775858711503
-    second: ChatGPT Image Dec 16, 2025, 11_56_26 PM_0
+      213: -967736513046846301
+    second: b58491f3-360e-4bf3-9fce-bb297368cdb2-md-removebg-preview_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 300
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -98,9 +98,9 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Android
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
-    textureFormat: 45
+    textureFormat: 50
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ChatGPT Image Dec 16, 2025, 11_56_26 PM_0
+      name: b58491f3-360e-4bf3-9fce-bb297368cdb2-md-removebg-preview_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 800
-        height: 1200
+        x: 57
+        y: 175
+        width: 294
+        height: 283
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 134c02fab00f46eb0800000000000000
-      internalID: -4727389775858711503
+      spriteID: 3a4eaa7c4c8e192f0800000000000000
+      internalID: -967736513046846301
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ChatGPT Image Dec 16, 2025, 11_56_26 PM_0: -4727389775858711503
+      b58491f3-360e-4bf3-9fce-bb297368cdb2-md-removebg-preview_0: -967736513046846301
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

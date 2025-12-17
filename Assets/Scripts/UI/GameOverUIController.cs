@@ -37,7 +37,7 @@ namespace KNC.UI
 
         private System.Collections.IEnumerator ShowGameplayNextFrame()
         {
-            yield return new WaitForSeconds(.85f); 
+            yield return new WaitForSeconds(.7f); 
             UIService.Instance.ShowGameplayUI();
             ScoreService.Instance.ResetScore();
             EventService.Instance.RaiseGameReset();
